@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Main from '../Main/Main.js';
 import './App.css';
 import Movies from '../Movies/Movies.js';
@@ -11,19 +11,20 @@ import { Route, Routes } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.js';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   return (
-    <div className="App">
+    <div className="app">
       <Routes>
         <Route
           path="/"
-          element={<Main isLoggedIn={false} />}
+          element={<Main isLoggedIn={isLoggedIn} />}
         />
         <Route
           path="/movies"
           element={
             <ProtectedRoute
               element={Movies}
-              isLoggedIn={false}
+              isLoggedIn={isLoggedIn}
             />
           }
         />
@@ -32,7 +33,7 @@ function App() {
           element={
             <ProtectedRoute
               element={SavedMovies}
-              isLoggedIn={false}
+              isLoggedIn={isLoggedIn}
             />
           }
         />
@@ -41,7 +42,7 @@ function App() {
           element={
             <ProtectedRoute
               element={Profile}
-              isLoggedIn={false}
+              isLoggedIn={isLoggedIn}
             />
           }
         />

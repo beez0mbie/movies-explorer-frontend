@@ -1,0 +1,30 @@
+.account {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  text-decoration: none;
+  padding-left: 30px;
+}
+
+.account__desc {
+  margin: 0;
+  color: #000;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+}
+
+.account__logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f9f9f9;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+}
+
+.account__logo-container_pink {
+  background-color: #000;
+}
