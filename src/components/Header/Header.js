@@ -1,12 +1,14 @@
 import React from 'react';
-import './Header.css';
+import { Link } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
+import './Header.css';
 
-const Header = () => {
+const Header = ({ isLoggedIn }) => {
   return (
     <section>
       <h5>Header</h5>
-      <Navigation />
+      <Link to="/">Logo</Link>
+      <Navigation isLoggedIn={isLoggedIn} />
     </section>
   );
 };

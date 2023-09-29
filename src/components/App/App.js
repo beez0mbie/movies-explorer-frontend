@@ -7,23 +7,57 @@ import Register from '../Register/Register.js';
 import Login from '../Login/Login.js';
 import Profile from '../Profile/Profile.js';
 import NotFound from '../NotFound/NotFound.js';
+import { Route, Routes } from 'react-router-dom';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.js';
 
 function App() {
   return (
     <div className="App">
-      <Main></Main>
-      <p>---</p>
-      <Movies />
-      <p>---</p>
-      <SavedMovies />
-      <p>---</p>
-      <Register />
-      <p>---</p>
-      <Login />
-      <p>---</p>
-      <Profile />
-      <p>---</p>
-      <NotFound />
+      <Routes>
+        <Route
+          path="/"
+          element={<Main isLoggedIn={false} />}
+        />
+        <Route
+          path="/movies"
+          element={
+            <ProtectedRoute
+              element={Movies}
+              isLoggedIn={false}
+            />
+          }
+        />
+        <Route
+          path="/saved-movies"
+          element={
+            <ProtectedRoute
+              element={SavedMovies}
+              isLoggedIn={false}
+            />
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute
+              element={Profile}
+              isLoggedIn={false}
+            />
+          }
+        />
+        <Route
+          path="/signin"
+          element={<Login />}
+        />
+        <Route
+          path="/signup"
+          element={<Register />}
+        />
+        <Route
+          path="*"
+          element={<NotFound />}
+        />
+      </Routes>
     </div>
   );
 }

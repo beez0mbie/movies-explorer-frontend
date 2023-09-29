@@ -3,9 +3,9 @@ import './Preloader.css';
 
 const Preloader = () => {
   return (
-    <section>
+    <div>
       <h3>Preloader</h3>
-    </section>
+    </div>
   );
 };
 

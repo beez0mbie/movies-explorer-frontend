@@ -9,10 +9,10 @@ import Portfolio from '../Portfolio/Portfolio';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
-const Main = () => {
+const Main = ({ isLoggedIn }) => {
   return (
     <div>
-      <Header />
+      <Header isLoggedIn={isLoggedIn} />
       <section>
         <h2>Main</h2>
         <Promo />

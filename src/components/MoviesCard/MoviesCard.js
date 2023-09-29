@@ -3,9 +3,9 @@ import './MoviesCard.css';
 
 const MoviesCard = () => {
   return (
-    <section>
+    <div>
       <h4>MoviesCard</h4>
-    </section>
+    </div>
   );
 };
 
