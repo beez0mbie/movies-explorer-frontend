@@ -3,8 +3,56 @@
   align-items: center;
   gap: 20px;
 }
+.navigation__container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
 
 .navigation__link {
   text-decoration: none;
   color: #000;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+}
+
+.navigation__link_f-medium {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+}
+
+.navigation__link_black {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 76px;
+  height: 32px;
+  border-radius: 3px;
+  background-color: #000;
+  color: #fff;
+}
+
+.navigation__hamburger {
+  display: none;
+  min-width: 44px;
+  min-height: 44px;
+  border: 0;
+  cursor: pointer;
+  background: no-repeat url('../../images/icon_hamburger.svg');
+  transition: opacity 0.3s;
+}
+
+.navigation__hamburger:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 770px) {
+  .navigation__hamburger {
+    display: block;
+  }
+  .navigation__container {
+    display: none;
+  }
 }

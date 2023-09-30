@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Promo from '../Promo/Promo';
 import NavTab from '../NavTab/NavTab';
 import AboutProject from '../AboutProject/AboutProject';
@@ -8,13 +8,16 @@ import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import SideBar from '../SideBar/SideBar';
 
 const Main = ({ isLoggedIn }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <div>
       <Header isLoggedIn={isLoggedIn} />
       <section>
-        <h2>Main</h2>
+        <h2 onClick={() => setIsOpen(true)}>Main</h2>
         <Promo />
         <NavTab />
         <AboutProject />
@@ -23,6 +26,7 @@ const Main = ({ isLoggedIn }) => {
         <Portfolio />
       </section>
       <Footer />
+      <SideBar isOpen={isOpen} />
     </div>
   );
 };

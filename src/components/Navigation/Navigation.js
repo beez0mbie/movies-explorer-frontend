@@ -8,31 +8,34 @@ const Navigation = ({ isLoggedIn }) => {
     <div className="navigation">
       {isLoggedIn ? (
         <>
-          <Link
-            className="navigation__link"
-            to="/movies">
-            Фильмы
-          </Link>
-          <Link
-            className="navigation__link"
-            to="/saved-movies">
-            Сохраненные фильмы
-          </Link>
-          <Link
-            className="navigation__link"
-            to="/profile">
-            <Account isPink />
-          </Link>
+          <div className="navigation__container">
+            <Link
+              className="navigation__link"
+              to="/movies">
+              Фильмы
+            </Link>
+            <Link
+              className="navigation__link"
+              to="/saved-movies">
+              Сохраненные фильмы
+            </Link>
+            <Link
+              className="navigation__link"
+              to="/profile">
+              <Account isPink />
+            </Link>
+          </div>
+          <button className="navigation__hamburger"></button>
         </>
       ) : (
         <>
           <Link
-            className="navigation__link"
+            className="navigation__link navigation__link_f-medium"
             to="/signup">
             Регистрация
           </Link>
           <Link
-            className="navigation__link"
+            className="navigation__link navigation__link_black navigation__link_f-medium"
             to="/signin">
             Войти
           </Link>
