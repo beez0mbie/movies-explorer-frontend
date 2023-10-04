@@ -15,16 +15,18 @@ const Main = ({ isLoggedIn }) => {
 
   return (
     <div>
-      <Header isLoggedIn={isLoggedIn} />
-      <section>
-        <h2 onClick={() => setIsOpen(true)}>Main</h2>
+      <Header
+        isLoggedIn={isLoggedIn}
+        onClick={() => setIsOpen(true)}
+      />
+      <div>
         <Promo />
         <NavTab />
         <AboutProject />
         <Tech />
         <AboutMe />
         <Portfolio />
-      </section>
+      </div>
       <Footer />
       <SideBar isOpen={isOpen} />
     </div>

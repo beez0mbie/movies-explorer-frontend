@@ -14,51 +14,53 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   return (
     <div className="app">
-      <Routes>
-        <Route
-          path="/"
-          element={<Main isLoggedIn={isLoggedIn} />}
-        />
-        <Route
-          path="/movies"
-          element={
-            <ProtectedRoute
-              element={Movies}
-              isLoggedIn={isLoggedIn}
-            />
-          }
-        />
-        <Route
-          path="/saved-movies"
-          element={
-            <ProtectedRoute
-              element={SavedMovies}
-              isLoggedIn={isLoggedIn}
-            />
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute
-              element={Profile}
-              isLoggedIn={isLoggedIn}
-            />
-          }
-        />
-        <Route
-          path="/signin"
-          element={<Login />}
-        />
-        <Route
-          path="/signup"
-          element={<Register />}
-        />
-        <Route
-          path="*"
-          element={<NotFound />}
-        />
-      </Routes>
+      <div className="app__container">
+        <Routes>
+          <Route
+            path="/"
+            element={<Main isLoggedIn={isLoggedIn} />}
+          />
+          <Route
+            path="/movies"
+            element={
+              <ProtectedRoute
+                element={Movies}
+                isLoggedIn={isLoggedIn}
+              />
+            }
+          />
+          <Route
+            path="/saved-movies"
+            element={
+              <ProtectedRoute
+                element={SavedMovies}
+                isLoggedIn={isLoggedIn}
+              />
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute
+                element={Profile}
+                isLoggedIn={isLoggedIn}
+              />
+            }
+          />
+          <Route
+            path="/signin"
+            element={<Login />}
+          />
+          <Route
+            path="/signup"
+            element={<Register />}
+          />
+          <Route
+            path="*"
+            element={<NotFound />}
+          />
+        </Routes>
+      </div>
     </div>
   );
 }

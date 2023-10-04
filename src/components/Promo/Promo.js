@@ -3,8 +3,8 @@ import './Promo.css';
 
 const Promo = () => {
   return (
-    <section>
-      <h3>Promo</h3>
+    <section className="promo">
+      <h1 className="promo__title">Учебный проект студента факультета Веб&#8209;разработки.</h1>
     </section>
   );
 };

@@ -19,11 +19,7 @@ const Navigation = ({ isLoggedIn }) => {
               to="/saved-movies">
               Сохраненные фильмы
             </Link>
-            <Link
-              className="navigation__link"
-              to="/profile">
-              <Account isPink />
-            </Link>
+            <Account isPink />
           </div>
           <button className="navigation__hamburger"></button>
         </>

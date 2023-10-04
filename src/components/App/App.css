@@ -1,9 +1,4 @@
 .app {
-  min-width: 320px;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   font-family: 'Inter', Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -11,5 +6,16 @@
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
-  background-color: #82e9cc;
+  background-color: #2f2f2f;
+  background-image: radial-gradient(#f3c1f8 1.1px, #2d2d31 1.1px);
+  background-size: 22px 22px;
+}
+.app__container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  max-width: 1280px;
 }
