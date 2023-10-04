@@ -5,7 +5,7 @@ import './Navigation.css';
 
 const Navigation = ({ isLoggedIn }) => {
   return (
-    <div className="navigation">
+    <nav className="navigation">
       {isLoggedIn ? (
         <>
           <div className="navigation__container">
@@ -37,7 +37,7 @@ const Navigation = ({ isLoggedIn }) => {
           </Link>
         </>
       )}
-    </div>
+    </nav>
   );
 };
 

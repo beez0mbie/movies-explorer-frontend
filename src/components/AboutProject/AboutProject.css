@@ -1,16 +1,20 @@
 .about-project {
   min-height: 608px;
+  padding: 0 70px;
   display: flex;
   flex-direction: column;
-  padding: 0 70px;
   background-color: #fff;
+}
+
+.about-project__landing-title {
+  padding-top: 10px;
 }
 
 .about-project__two-columns {
   display: flex;
   justify-content: space-between;
   padding-top: 70px;
-  gap: 30px;
+  gap: 53px;
 }
 .about-project__column {
   max-width: 555px;
@@ -85,6 +89,14 @@
   .about-project {
     min-height: 585px;
     padding: 0 50px;
+  }
+
+  .about-project__landing-title {
+    padding-top: 0px;
+  }
+
+  .about-project__two-columns {
+    gap: 37px;
   }
 
   .about-project__paragraph {

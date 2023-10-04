@@ -3,8 +3,32 @@ import './Portfolio.css';
 
 const Portfolio = () => {
   return (
-    <section>
-      <h3>Portfolio</h3>
+    <section className="portfolio">
+      <h2 className="portfolio__title">Портфолио</h2>
+      <ul className="portfolio__list">
+        <li className="portfolio__list-item">
+          <a
+            href="https://beez0mbie.github.io/how-to-learn/"
+            className="portfolio__link">
+            Статичный сайт
+          </a>
+        </li>
+        <li className="portfolio__list-item">
+          <a
+            href="https://beez0mbie.github.io/russian-travel/"
+            className="portfolio__link">
+            Адаптивный сайт
+          </a>
+        </li>
+        <li className="portfolio__list-item">
+          <a
+            href="https://mesto.ashmelkov.nomoredomainsicu.ru/"
+            target="blank"
+            className="portfolio__link">
+            Одностраничное приложение
+          </a>
+        </li>
+      </ul>
     </section>
   );
 };

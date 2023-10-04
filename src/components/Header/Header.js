@@ -9,7 +9,7 @@ const Header = ({ isLoggedIn }) => {
   const isMainPage = location.pathname === '/';
 
   return (
-    <div className={`header${isMainPage ? ' header_pink' : ''}`}>
+    <header className={`header${isMainPage ? ' header_pink' : ''}`}>
       <Link to="/">
         <img
           src={logo}
@@ -18,7 +18,7 @@ const Header = ({ isLoggedIn }) => {
         />
       </Link>
       <Navigation isLoggedIn={isLoggedIn} />
-    </div>
+    </header>
   );
 };
 

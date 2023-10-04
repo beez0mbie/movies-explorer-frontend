@@ -19,14 +19,11 @@ const Main = ({ isLoggedIn }) => {
         isLoggedIn={isLoggedIn}
         onClick={() => setIsOpen(true)}
       />
-      <div>
-        <Promo />
-        <NavTab />
-        <AboutProject />
-        <Tech />
-        <AboutMe />
-        <Portfolio />
-      </div>
+      <Promo />
+      <NavTab />
+      <AboutProject />
+      <Tech />
+      <AboutMe />
       <Footer />
       <SideBar isOpen={isOpen} />
     </div>

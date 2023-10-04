@@ -9,7 +9,9 @@ const AboutMe = () => {
     <section
       className="about-me"
       id="about-me">
-      <LandingTitle>Студент</LandingTitle>
+      <div className="about-me__landing-title">
+        <LandingTitle>Студент</LandingTitle>
+      </div>
       <div className="about-me__container">
         <figcaption className="about-me__photo-container">
           <img
@@ -19,7 +21,7 @@ const AboutMe = () => {
           />
         </figcaption>
         <article className="about-me__content">
-          <h2 className="about-me__title">Алексей</h2>
+          <h2 className="about-me__title">Виталий</h2>
           <h3 className="about-me__subtitle">Фронтенд&#8209;разработчик, 33 года</h3>
           <p className="about-me__paragraph">
             Я родился и живу в Саратове, закончил факультет экономики СГУ. У меня есть жена и дочь.

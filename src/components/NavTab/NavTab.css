@@ -31,6 +31,10 @@
 }
 
 @media screen and (max-width: 420px) {
+  .nav-tab {
+    gap: 25px;
+  }
+
   .nav-tab__item {
     font-size: 11px;
   }

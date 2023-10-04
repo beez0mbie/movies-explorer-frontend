@@ -7,7 +7,9 @@ const AboutProject = () => {
     <section
       className="about-project"
       id="about-project">
-      <LandingTitle>О проекте</LandingTitle>
+      <div className="about-project__landing-title">
+        <LandingTitle>О проекте</LandingTitle>
+      </div>
       <div className="about-project__two-columns">
         <article className="about-project__column">
           <h3 className="about-project__title">Дипломный проект включал 5 этапов</h3>
