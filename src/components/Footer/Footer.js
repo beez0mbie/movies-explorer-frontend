@@ -11,13 +11,15 @@ const Footer = () => {
         <nav className="footer__nav">
           <a
             href="https://practicum.yandex.ru/"
-            target="blank"
+            target="_blank"
+            rel="noreferrer"
             className="footer__link">
             Яндекс.Практикум
           </a>
           <a
             href="https://github.com/beez0mbie"
-            target="blank"
+            target="_blank"
+            rel="noreferrer"
             className="footer__link">
             Github
           </a>

@@ -9,6 +9,8 @@ const Portfolio = () => {
         <li className="portfolio__list-item">
           <a
             href="https://beez0mbie.github.io/how-to-learn/"
+            target="_blank"
+            rel="noreferrer"
             className="portfolio__link">
             Статичный сайт
           </a>
@@ -16,6 +18,8 @@ const Portfolio = () => {
         <li className="portfolio__list-item">
           <a
             href="https://beez0mbie.github.io/russian-travel/"
+            target="_blank"
+            rel="noreferrer"
             className="portfolio__link">
             Адаптивный сайт
           </a>
@@ -23,7 +27,8 @@ const Portfolio = () => {
         <li className="portfolio__list-item">
           <a
             href="https://mesto.ashmelkov.nomoredomainsicu.ru/"
-            target="blank"
+            target="_blank"
+            rel="noreferrer"
             className="portfolio__link">
             Одностраничное приложение
           </a>
