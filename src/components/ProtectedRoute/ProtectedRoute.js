@@ -8,7 +8,7 @@ const ProtectedRoute = ({ element: Component, ...props }) => {
     <>
       <Header {...props} />
       <Component {...props} />
-      <Footer />
+      {!props.isHideFooter && <Footer />}
     </>
   ) : (
     <Navigate

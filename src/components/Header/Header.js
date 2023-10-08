@@ -4,7 +4,7 @@ import Navigation from '../Navigation/Navigation';
 import './Header.css';
 import logo from '../../images/logo.svg';
 
-const Header = ({ isLoggedIn }) => {
+const Header = ({ isLoggedIn, toggleSidebar }) => {
   const location = useLocation();
   const isMainPage = location.pathname === '/';
 
@@ -17,7 +17,11 @@ const Header = ({ isLoggedIn }) => {
           className="header__logo"
         />
       </Link>
-      <Navigation isLoggedIn={isLoggedIn} />
+      <Navigation
+        isLoggedIn={isLoggedIn}
+        isMainPage={isMainPage}
+        toggleSidebar={toggleSidebar}
+      />
     </header>
   );
 };

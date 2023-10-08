@@ -9,16 +9,25 @@ import Profile from '../Profile/Profile.js';
 import NotFound from '../NotFound/NotFound.js';
 import { Route, Routes } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.js';
+import SideBar from '../SideBar/SideBar';
+import Header from '../Header/Header';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isOpenSideBar, setIsOpenSideBar] = useState(false);
+  const toggleSidebar = () => setIsOpenSideBar((prev) => !prev);
   return (
     <div className="app">
       <div className="app__container">
         <Routes>
           <Route
             path="/"
-            element={<Main isLoggedIn={isLoggedIn} />}
+            element={
+              <Main
+                isLoggedIn={isLoggedIn}
+                toggleSidebar={toggleSidebar}
+              />
+            }
           />
           <Route
             path="/movies"
@@ -26,6 +35,7 @@ function App() {
               <ProtectedRoute
                 element={Movies}
                 isLoggedIn={isLoggedIn}
+                toggleSidebar={toggleSidebar}
               />
             }
           />
@@ -35,6 +45,7 @@ function App() {
               <ProtectedRoute
                 element={SavedMovies}
                 isLoggedIn={isLoggedIn}
+                toggleSidebar={toggleSidebar}
               />
             }
           />
@@ -44,6 +55,8 @@ function App() {
               <ProtectedRoute
                 element={Profile}
                 isLoggedIn={isLoggedIn}
+                toggleSidebar={toggleSidebar}
+                isHideFooter
               />
             }
           />
@@ -61,6 +74,10 @@ function App() {
           />
         </Routes>
       </div>
+      <SideBar
+        isOpen={isOpenSideBar}
+        toggleSidebar={toggleSidebar}
+      />
     </div>
   );
 }

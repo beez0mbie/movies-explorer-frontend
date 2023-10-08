@@ -1,11 +1,11 @@
 import React from 'react';
 import './Preloader.css';
 
-const Preloader = () => {
+const Preloader = ({ isHideButton }) => {
   return (
-    <div>
-      <h3>Preloader</h3>
-    </div>
+    <section className={`preloader ${isHideButton && 'preloader_min-height'}`}>
+      {!isHideButton && <button className="preloader__button">Ещё</button>}
+    </section>
   );
 };
 

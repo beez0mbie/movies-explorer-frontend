@@ -3,9 +3,8 @@ import './SideBar.css';
 import { Link } from 'react-router-dom';
 import Account from '../Account/Account';
 
-const SideBar = ({ isOpen }) => {
+const SideBar = ({ isOpen, toggleSidebar }) => {
   const handleMouseDown = () => console.log('handleMouseDown');
-  const onClose = () => console.log('onClose');
   return (
     <div
       className={`sidebar ${isOpen ? 'sidebar_opened' : ''}`}
@@ -15,7 +14,7 @@ const SideBar = ({ isOpen }) => {
           aria-label="Закрыть сайдбар"
           type="button"
           className="sidebar__close-button"
-          onClick={onClose}
+          onClick={toggleSidebar}
         />
         <div className="sidebar__nav">
           <ul className="sidebar__list">

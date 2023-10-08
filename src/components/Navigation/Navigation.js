@@ -1,27 +1,37 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Account from '../Account/Account';
 import './Navigation.css';
 
-const Navigation = ({ isLoggedIn }) => {
+const Navigation = ({ isLoggedIn, isMainPage, toggleSidebar }) => {
+  const location = useLocation();
+  const isMovies = location.pathname === '/movies';
   return (
     <nav className="navigation">
       {isLoggedIn ? (
         <>
           <div className="navigation__container">
-            <Link
-              className="navigation__link"
-              to="/movies">
-              Фильмы
-            </Link>
-            <Link
-              className="navigation__link"
-              to="/saved-movies">
-              Сохраненные фильмы
-            </Link>
-            <Account isPink />
+            <ul className="navigation__list">
+              <li>
+                <Link
+                  className={`navigation__link ${isMovies && 'navigation__link_f-bold'}`}
+                  to="/movies">
+                  Фильмы
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="navigation__link"
+                  to="/saved-movies">
+                  Сохраненные фильмы
+                </Link>
+              </li>
+            </ul>
+            <Account isPink={isMainPage} />
           </div>
-          <button className="navigation__hamburger"></button>
+          <button
+            className="navigation__hamburger"
+            onClick={toggleSidebar}></button>
         </>
       ) : (
         <>

@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Switch from '../Switch/Switch';
 import './FilterCheckbox.css';
 
 const FilterCheckbox = () => {
+  const [isChecked, setIsChecked] = useState(true);
   return (
-    <section>
-      <h3>FilterCheckbox</h3>
-    </section>
+    <div className="filter">
+      <Switch
+        onChange={() => {
+          setIsChecked((prev) => !prev);
+        }}
+        isChecked={isChecked}
+      />
+      <p className="filter__desc">Короткометражки</p>
+    </div>
   );
 };
 

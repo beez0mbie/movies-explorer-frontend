@@ -1,0 +1,133 @@
+.movie-card {
+  position: relative;
+  cursor: pointer;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+}
+
+.movie-card:hover .movie-card__like {
+  /* плавное появление */
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0s;
+}
+
+.movie-card__like {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 72px;
+  height: 21px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 30px;
+  background-color: #f9f9f9;
+  /* плавное появление */
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 0.3s, opacity 0.3s linear;
+}
+
+.movie-card__like-paragraph {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 9px;
+  letter-spacing: 0px;
+}
+
+.movie-card__like_active {
+  visibility: visible;
+  opacity: 1;
+  width: 21px;
+  height: 21px;
+  background: center no-repeat url('../../images/icon_like.svg');
+  background-color: #ff4062;
+}
+
+.movie-card:hover .movie-card__remove {
+  /* плавное появление */
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0s;
+}
+
+.movie-card__remove {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  border-radius: 30px;
+  visibility: hidden;
+  opacity: 0;
+  width: 21px;
+  height: 21px;
+  background: center no-repeat url('../../images/icon_remove.svg');
+  background-color: #f9f9f9;
+  transition: opacity 0.4s;
+}
+
+.movie-card__image-container {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.movie-card__image {
+  width: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.movie-card__desc {
+  display: flex;
+  padding: 14px 14px 0;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0px;
+}
+
+.movie-card__name {
+  margin: 0;
+}
+
+.movie-card__duration {
+  margin: 0;
+  padding: 3px 9px;
+  border-radius: 3px;
+  background-color: #f9f9f9;
+  color: #a0a0a0;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 10px;
+  letter-spacing: 0px;
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .movie-card__desc {
+    padding: 26px 0 0 0;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .movie-card__desc {
+    padding: 16px 0 0 0;
+    font-size: 12px;
+    line-height: 15px;
+  }
+  .movie-card__like {
+    top: 10px;
+    right: 10px;
+  }
+  .movie-card__remove {
+    top: 10px;
+    right: 10px;
+  }
+}

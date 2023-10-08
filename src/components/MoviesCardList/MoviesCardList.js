@@ -1,12 +1,13 @@
 import React from 'react';
-import './MoviesCardList';
+import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-const MoviesCardList = () => {
+const MoviesCardList = ({ shouldRemowe }) => {
   return (
-    <section>
-      <h3>MoviesCardList</h3>
-      <MoviesCard />
+    <section className="movies-cards">
+      <MoviesCard shouldRemowe={shouldRemowe} />
+      <MoviesCard shouldRemowe={shouldRemowe} />
+      <MoviesCard shouldRemowe={shouldRemowe} />
     </section>
   );
 };
