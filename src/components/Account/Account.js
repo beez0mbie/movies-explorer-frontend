@@ -15,7 +15,7 @@ const Account = ({ isPink }) => {
           <img
             className="account__logo"
             src={iconAccountPink}
-            alt="Лого аккаунта"
+            alt="Лого аккаунта розовое"
           />
         ) : (
           <img

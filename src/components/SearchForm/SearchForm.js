@@ -11,7 +11,7 @@ const SearchForm = () => {
           <img
             className="search__logo"
             src={searchIcon}
-            alt="search icon"
+            alt="Иконка поиска"
           />
           <input
             className="search__input"

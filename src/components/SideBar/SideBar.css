@@ -74,7 +74,7 @@
   gap: 28px;
 }
 
-.sidebar__list-link {
+.sidebar__link {
   text-decoration: none;
   color: #000;
   font-size: 18px;
@@ -83,12 +83,17 @@
   transition: opacity 0.3s;
 }
 
-.sidebar__list-link:hover {
+.sidebar__link:hover {
   cursor: pointer;
   text-decoration: underline;
   text-underline-offset: 8px;
   text-decoration-thickness: 3px;
   opacity: 0.7;
+}
+.sidebar__link_active {
+  text-decoration: underline;
+  text-underline-offset: 8px;
+  text-decoration-thickness: 3px;
 }
 
 @media screen and (max-width: 520px) {

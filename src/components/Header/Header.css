@@ -9,6 +9,14 @@
   background-color: #fff;
 }
 
+.header__logo {
+  transition: opacity 0.3s;
+}
+
+.header__logo:hover {
+  opacity: 0.8;
+}
+
 .header_pink {
   background-color: #f3c1f8;
 }

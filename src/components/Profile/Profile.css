@@ -3,7 +3,6 @@
   padding: 74px 0 70px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
 }
 
@@ -14,10 +13,11 @@
   line-height: 29px;
   letter-spacing: 0em;
 }
-.profile__creds {
+.profile__form {
+  flex: 1;
   min-width: 410px;
   margin: 0;
-  padding: 0 0 96px;
+  padding-top: 107px;
   display: flex;
   flex-direction: column;
   list-style-type: none;
@@ -48,13 +48,20 @@
 
 .profile__field-content {
   margin: 0;
+  text-align: right;
+  border: 0;
   font-size: 11px;
   font-weight: 400;
   line-height: 13px;
   letter-spacing: 0px;
 }
 
+.profile__field-content:focus {
+  outline: none;
+}
+
 .profile__buttons {
+  margin-top: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -72,7 +79,6 @@
   background-color: transparent;
   transition: opacity 0.3s;
 }
-
 .profile__button:hover {
   opacity: 0.7;
 }
@@ -82,14 +88,44 @@
   font-weight: 500;
 }
 
+.profile__error {
+  color: #ff4062;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 13px;
+  letter-spacing: 0px;
+}
+
+.profile__submit-button {
+  min-width: 410px;
+  min-height: 45px;
+  border: 0;
+  border-radius: 3px;
+  color: #fff;
+  background-color: #3456f3;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 17px;
+  letter-spacing: 0em;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.profile__submit-button_error {
+  color: #c2c2c2;
+  background-color: #f8f8f8;
+}
+
+.profile__submit-button:hover {
+  opacity: 0.8;
+}
+
 @media screen and (max-width: 768px) {
   .profile {
-    padding: 0px;
-    gap: 80px;
-    justify-content: center;
+    padding: 237px 0px 240px;
   }
-  .profile__creds {
-    padding-bottom: 118px;
+  .profile__form {
+    padding-top: 80px;
   }
 }
 
@@ -98,7 +134,7 @@
     padding: 70px 0 40px;
     gap: 65px;
   }
-  .profile__creds {
+  .profile__form {
     flex: 1;
     padding: 0;
     min-width: 260px;
@@ -106,5 +142,9 @@
   .profile__button {
     font-size: 12px;
     line-height: 15px;
+  }
+
+  .profile__submit-button {
+    min-width: 240px;
   }
 }

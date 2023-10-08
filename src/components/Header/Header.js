@@ -13,7 +13,7 @@ const Header = ({ isLoggedIn, toggleSidebar }) => {
       <Link to="/">
         <img
           src={logo}
-          alt="Логотип 'Место'"
+          alt="Логотип"
           className="header__logo"
         />
       </Link>

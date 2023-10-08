@@ -6,6 +6,7 @@ import './Navigation.css';
 const Navigation = ({ isLoggedIn, isMainPage, toggleSidebar }) => {
   const location = useLocation();
   const isMovies = location.pathname === '/movies';
+  const isSavedMovies = location.pathname === '/saved-movies';
   return (
     <nav className="navigation">
       {isLoggedIn ? (
@@ -21,7 +22,7 @@ const Navigation = ({ isLoggedIn, isMainPage, toggleSidebar }) => {
               </li>
               <li>
                 <Link
-                  className="navigation__link"
+                  className={`navigation__link ${isSavedMovies && 'navigation__link_f-bold'}`}
                   to="/saved-movies">
                   Сохраненные фильмы
                 </Link>
