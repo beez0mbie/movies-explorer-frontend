@@ -1,9 +1,15 @@
 .movie-card {
+  list-style-type: none;
+}
+
+.movie-card__link {
   position: relative;
   cursor: pointer;
   padding: 0;
   border: 0;
   background-color: transparent;
+  text-decoration: none;
+  color: #000;
 }
 
 .movie-card:hover .movie-card__like {
@@ -87,14 +93,14 @@
   padding: 14px 14px 0;
   justify-content: space-between;
   align-items: center;
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 16px;
-  letter-spacing: 0px;
 }
 
 .movie-card__name {
   margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0px;
 }
 
 .movie-card__duration {

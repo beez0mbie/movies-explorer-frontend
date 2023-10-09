@@ -6,11 +6,11 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
 const Movies = () => {
   return (
-    <section className="movies">
+    <main className="movies">
       <SearchForm />
       <MoviesCardList />
       <Preloader />
-    </section>
+    </main>
   );
 };
 

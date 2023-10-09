@@ -26,16 +26,16 @@ const AboutProject = () => {
           </p>
         </article>
       </div>
-      <div className="about-project__progress">
+      <article className="about-project__progress">
         <div className="about-project__progress-part about-project__progress-part_1">
-          <div className="about-project__part-week about-project__part-week_black">1 неделя</div>
-          <div className="about-project__part-desc">Back-end</div>
+          <p className="about-project__part-week about-project__part-week_black">1 неделя</p>
+          <p className="about-project__part-desc">Back-end</p>
         </div>
         <div className="about-project__progress-part about-project__progress-part_4">
-          <div className="about-project__part-week about-project__part-week_gray">4 недели</div>
-          <div className="about-project__part-desc">Front-end</div>
+          <p className="about-project__part-week about-project__part-week_gray">4 недели</p>
+          <p className="about-project__part-desc">Front-end</p>
         </div>
-      </div>
+      </article>
     </section>
   );
 };

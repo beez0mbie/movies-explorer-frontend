@@ -10,7 +10,7 @@ const Account = ({ isPink }) => {
       to="/profile"
       className="account">
       <p className="account__desc">Аккаунт</p>
-      <figcaption className={`account__logo-container ${isPink && 'account__logo-container_pink'}`}>
+      <div className={`account__logo-container ${isPink && 'account__logo-container_pink'}`}>
         {isPink ? (
           <img
             className="account__logo"
@@ -24,7 +24,7 @@ const Account = ({ isPink }) => {
             alt="Лого аккаунта"
           />
         )}
-      </figcaption>
+      </div>
     </Link>
   );
 };

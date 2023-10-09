@@ -6,11 +6,11 @@ import Preloader from '../Preloader/Preloader';
 
 const SavedMovies = () => {
   return (
-    <section className="saved-movies">
+    <main className="saved-movies">
       <SearchForm />
       <MoviesCardList shouldRemowe />
       <Preloader isHideButton />
-    </section>
+    </main>
   );
 };
 

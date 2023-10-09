@@ -31,7 +31,7 @@
 .sidebar__close-button {
   display: block;
   align-self: flex-end;
-  padding: 23px;
+  margin: 22px 22px 0 0;
   min-width: 32px;
   min-height: 32px;
   cursor: pointer;
@@ -58,7 +58,7 @@
 }
 
 .sidebar__nav {
-  padding: 92px 0;
+  padding: 106px 0 63px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -100,5 +100,17 @@
 @media screen and (max-width: 520px) {
   .sidebar__container {
     min-width: 100%;
+  }
+
+  .sidebar__close-button {
+    margin: 13px 13px 0 0;
+  }
+
+  .sidebar__nav {
+    padding: 100px 0 35px;
+  }
+
+  .sidebar__list {
+    gap: 24px;
   }
 }

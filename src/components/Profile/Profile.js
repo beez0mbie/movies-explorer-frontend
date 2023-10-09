@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import { useForm } from '../../hooks/useForm';
 import './Profile.css';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const { formValues, handleChangeForm } = useForm({
     name: 'Виталий',
     email: 'pochta@yandex.ru',
   });
+  const naigate = useNavigate();
   const [isError, setIsError] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const handleSubmit = () => {
     console.log('Submit');
   };
   return (
-    <section className="profile">
-      <h2 className="profile__title">Привет, Виталий!</h2>
+    <main className="profile">
+      <h1 className="profile__title">Привет, Виталий!</h1>
       <form
         onSubmit={handleSubmit}
         id="profile-form"
@@ -29,11 +31,14 @@ const Profile = () => {
             required
             id="name"
             name="name"
+            minLength="2"
+            maxLength="30"
             className="profile__field-content"
             type="text"
             value={formValues.name}
             onChange={handleChangeForm}
             readOnly={!isEdit}
+            placeholder="Имя"
           />
         </div>
         <div className="profile__cred-item">
@@ -51,6 +56,7 @@ const Profile = () => {
             value={formValues.email}
             onChange={handleChangeForm}
             readOnly={!isEdit}
+            placeholder="E-mail"
           />
         </div>
         <div className="profile__buttons">
@@ -66,13 +72,23 @@ const Profile = () => {
             </button>
           ) : (
             <>
-              <button className="profile__button">Редактировать</button>
-              <button className="profile__button profile__button_red">Выйти из аккаунта</button>
+              <button
+                type="button"
+                onClick={() => setIsEdit(true)}
+                className="profile__button">
+                Редактировать
+              </button>
+              <button
+                type="button"
+                onClick={() => naigate('/')}
+                className="profile__button profile__button_red">
+                Выйти из аккаунта
+              </button>
             </>
           )}
         </div>
       </form>
-    </section>
+    </main>
   );
 };
 

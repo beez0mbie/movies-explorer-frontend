@@ -31,6 +31,7 @@ const Navigation = ({ isLoggedIn, isMainPage, toggleSidebar }) => {
             <Account isPink={isMainPage} />
           </div>
           <button
+            type="button"
             className="navigation__hamburger"
             onClick={toggleSidebar}></button>
         </>

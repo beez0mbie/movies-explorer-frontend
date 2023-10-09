@@ -54,7 +54,8 @@
 
 @media screen and (max-width: 420px) {
   .not-found__container {
-    padding-top: 84px;
+    flex: 1;
+    padding-top: 200px;
   }
   .not-found__title {
     font-size: 80px;
@@ -67,7 +68,8 @@
   }
 
   .not-found__link {
-    padding-top: 284px;
+    margin-top: auto;
+    padding: 0 0 30px 0;
     font-size: 12px;
     line-height: 15px;
   }

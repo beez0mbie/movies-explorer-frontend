@@ -1,7 +1,11 @@
 .movies-cards {
+  padding: 70px 70px 26px;
+}
+
+.movies-cards__list {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 70px 70px 26px;
+  padding: 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(284px, 1fr));
   -webkit-box-sizing: border-box;

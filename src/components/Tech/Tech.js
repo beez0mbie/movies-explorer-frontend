@@ -10,7 +10,7 @@ const Tech = () => {
       <LandingTitle>Технологии</LandingTitle>
       <div className="tech__content">
         <div className="tech__about">
-          <h2 className="tech__about-title">7 технологий</h2>
+          <h3 className="tech__about-title">7 технологий</h3>
           <p className="tech__about-paragraph">
             На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.
           </p>

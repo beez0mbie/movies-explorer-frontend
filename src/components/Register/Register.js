@@ -15,13 +15,15 @@ const Register = () => {
     console.log('Submit');
   };
   return (
-    <section className="register">
-      <div className="register__container">
-        <img
-          src={logo}
-          alt="Логотип"
-          className="register__logo"
-        />
+    <main className="register">
+      <section className="register__container">
+        <Link to="/">
+          <img
+            src={logo}
+            alt="Логотип"
+            className="register__logo"
+          />
+        </Link>
         <h1 className="register__title">Добро пожаловать!</h1>
         <form
           onSubmit={handleSubmit}
@@ -37,10 +39,12 @@ const Register = () => {
             id="name"
             name="name"
             minlength="2"
+            maxLength="30"
             className="register__input"
             type="text"
             value={formValues.name}
             onChange={handleChangeForm}
+            placeholder="Имя"
           />
           <label
             htmlFor="email"
@@ -55,6 +59,7 @@ const Register = () => {
             type="email"
             value={formValues.email}
             onChange={handleChangeForm}
+            placeholder="E-mail"
           />
           <label
             htmlFor="password"
@@ -66,10 +71,12 @@ const Register = () => {
             id="password"
             name="password"
             minlength="8"
-            className={`register__input ${isError && 'register__error_red'}`}
+            maxLength="30"
+            className={`register__input ${isError && 'register__input_red'}`}
             type="password"
             value={formValues.password}
             onChange={handleChangeForm}
+            placeholder="Пароль"
           />
           {isError && (
             <span className="register__error register__error_red">Что-то пошло не так...</span>
@@ -88,8 +95,8 @@ const Register = () => {
             Войти
           </Link>
         </div>
-      </div>
-    </section>
+      </section>
+    </main>
   );
 };
 

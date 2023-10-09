@@ -5,9 +5,20 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 const MoviesCardList = ({ shouldRemowe }) => {
   return (
     <section className="movies-cards">
-      <MoviesCard shouldRemowe={shouldRemowe} />
-      <MoviesCard shouldRemowe={shouldRemowe} />
-      <MoviesCard shouldRemowe={shouldRemowe} />
+      <ul className="movies-cards__list">
+        <MoviesCard
+          shouldRemowe={shouldRemowe}
+          name="33 слова о дизайне"
+        />
+        <MoviesCard
+          shouldRemowe={shouldRemowe}
+          name="33 слова о дизайне"
+        />
+        <MoviesCard
+          shouldRemowe={shouldRemowe}
+          name="33 слова о дизайне"
+        />
+      </ul>
     </section>
   );
 };

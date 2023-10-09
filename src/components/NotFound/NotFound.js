@@ -4,8 +4,8 @@ import './NotFound.css';
 
 const NotFound = () => {
   return (
-    <section className="not-found">
-      <div className="not-found__container">
+    <main className="not-found">
+      <section className="not-found__container">
         <h2 className="not-found__title">404</h2>
         <p className="not-found__desc">Страница не найдена</p>
         <Link
@@ -13,8 +13,8 @@ const NotFound = () => {
           to={'..'}>
           Назад
         </Link>
-      </div>
-    </section>
+      </section>
+    </main>
   );
 };
 

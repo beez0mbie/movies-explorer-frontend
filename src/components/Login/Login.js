@@ -14,13 +14,15 @@ const Login = () => {
     console.log('Submit');
   };
   return (
-    <section className="login">
-      <div className="login__container">
-        <img
-          src={logo}
-          alt="Логотип"
-          className="login__logo"
-        />
+    <main className="login">
+      <section className="login__container">
+        <Link to="/">
+          <img
+            src={logo}
+            alt="Логотип"
+            className="login__logo"
+          />
+        </Link>
         <h1 className="login__title">Рады видеть!</h1>
         <form
           onSubmit={handleSubmit}
@@ -39,6 +41,7 @@ const Login = () => {
             type="email"
             value={formValues.email}
             onChange={handleChangeForm}
+            placeholder="E-mail"
           />
           <label
             htmlFor="password"
@@ -50,10 +53,12 @@ const Login = () => {
             id="password"
             name="password"
             minlength="8"
+            maxLength="30"
             className={`login__input ${isError && 'login__error_red'}`}
             type="password"
             value={formValues.password}
             onChange={handleChangeForm}
+            placeholder="Пароль"
           />
           {isError && <span className="login__error login__error_red">Что-то пошло не так...</span>}
           <button
@@ -70,8 +75,8 @@ const Login = () => {
             Регистрация
           </Link>
         </div>
-      </div>
-    </section>
+      </section>
+    </main>
   );
 };
 

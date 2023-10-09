@@ -15,11 +15,13 @@ const Main = ({ isLoggedIn, toggleSidebar }) => {
         isLoggedIn={isLoggedIn}
         toggleSidebar={toggleSidebar}
       />
-      <Promo />
-      <NavTab />
-      <AboutProject />
-      <Tech />
-      <AboutMe />
+      <main>
+        <Promo />
+        <NavTab />
+        <AboutProject />
+        <Tech />
+        <AboutMe />
+      </main>
       <Footer />
     </>
   );

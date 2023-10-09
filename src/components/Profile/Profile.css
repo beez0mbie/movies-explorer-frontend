@@ -30,7 +30,7 @@
 }
 
 .profile__cred-item {
-  padding: 16px 0;
+  padding: 8px 0;
   border-bottom: solid 1px #e8e8e8;
 }
 
@@ -48,6 +48,8 @@
 
 .profile__field-content {
   margin: 0;
+  padding: 8px;
+  border-radius: 4px;
   text-align: right;
   border: 0;
   font-size: 11px;
@@ -57,7 +59,7 @@
 }
 
 .profile__field-content:focus {
-  outline: none;
+  outline: 1px solid #4083ff;
 }
 
 .profile__buttons {
