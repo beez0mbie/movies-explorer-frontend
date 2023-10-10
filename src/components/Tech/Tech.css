@@ -1,0 +1,124 @@
+.tech {
+  min-height: 625px;
+  display: flex;
+  flex-direction: column;
+  padding: 0 70px;
+  background-color: #f5f5f5;
+}
+
+.tech__content {
+}
+
+.tech__about {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.tech__about-title {
+  margin: 0;
+  padding-top: 90px;
+  font-size: 50px;
+  font-weight: 400;
+  line-height: 58px;
+  letter-spacing: -0.04em;
+}
+
+.tech__about-paragraph {
+  max-width: 460px;
+  margin: 0;
+  padding-top: 26px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.04em;
+  text-align: center;
+}
+
+.tech__technologies-list {
+  margin: 0;
+  padding: 100px 0 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  justify-content: center;
+  gap: 10px;
+}
+
+.tech__technology-item {
+  min-width: 90px;
+  min-height: 60px;
+  border-radius: 10px;
+  background-color: #e8e8e8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tech__technology-name {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  letter-spacing: -0.04em;
+}
+
+@media screen and (max-width: 768px) {
+  .tech {
+    min-height: 567px;
+    padding: 0 50px;
+  }
+  .tech__about-title {
+    padding-top: 80px;
+  }
+
+  .tech__about-paragraph {
+    padding-top: 22px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .tech__technologies-list {
+    padding-top: 83px;
+  }
+
+  .tech__technology-item {
+    min-width: 84px;
+    min-height: 57px;
+  }
+  .tech__technology-name {
+    font-size: 12px;
+    line-height: 14px;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .tech {
+    min-height: 651px;
+    padding: 0 18px;
+  }
+  .tech__about-title {
+    padding-top: 60px;
+    font-family: Inter;
+    font-size: 30px;
+    line-height: 36px;
+  }
+
+  .tech__about-paragraph {
+    padding-top: 24px;
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .tech__technology-name {
+    font-size: 12px;
+    line-height: 14px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .tech__technologies-list {
+    padding: 50px 53px 0;
+    justify-content: flex-start;
+  }
+}
