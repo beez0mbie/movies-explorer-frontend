@@ -5,24 +5,11 @@ import searchIcon from '../../images/icon_search.svg';
 import './SearchForm.css';
 import { FormValidator } from '../../utils/FormValidator';
 import { validatorConfig } from '../../utils/validatotConfig';
-import { moviesApi } from '../../utils/MoviesApi';
-import { mainApi } from '../../utils/MainApi';
 
-const SearchForm = () => {
+const SearchForm = ({ handleSubmit }) => {
   const { formValues, handleChangeForm } = useForm({
     search: '',
   });
-  const handleSubmit = () => {
-    moviesApi.getFilms().then((films) => console.log(films));
-    mainApi
-      .signin('front@front.ru', '12345678')
-      .then((res) => {
-        console.log('mainAuthRes', res);
-      })
-      .catch((err) => {
-        console.error('mainAuthErr', err);
-      });
-  };
 
   const searchForm = useRef(null);
 

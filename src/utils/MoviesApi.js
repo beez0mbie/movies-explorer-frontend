@@ -2,7 +2,7 @@ import { BEAT_FILM_URL } from '../env';
 import { Api } from './Api';
 
 class MoviesApi extends Api {
-  getFilms = () =>
+  getMovies = () =>
     this._request('beatfilm-movies', {
       headers: this.headers,
     });

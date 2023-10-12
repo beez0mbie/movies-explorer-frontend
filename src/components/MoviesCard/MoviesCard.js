@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import './MoviesCard.css';
-import MovieImage from '../../images/movie-temp.png';
 import { Link } from 'react-router-dom';
+import { BEAT_FILM_URL } from '../../env';
 
-const MoviesCard = ({ shouldRemowe, name }) => {
+const MoviesCard = ({ nameRU, duration, trailerLink, image, shouldRemowe }) => {
+  const hours = Math.floor(duration / 60);
+  const minutes = duration % 60;
   const [like, setLike] = useState(false);
-  const defaultUrl = 'https://www.kinopoisk.ru/film/1302273/';
 
   return (
     <li className="movie-card">
       <Link
         className="movie-card__link"
-        to={defaultUrl}
+        to={trailerLink}
         target="_blank">
         {shouldRemowe ? (
           <div className="movie-card__remove"></div>
@@ -27,13 +28,13 @@ const MoviesCard = ({ shouldRemowe, name }) => {
         )}
         <figure className="movie-card__image-container">
           <img
-            src={MovieImage}
-            alt={name}
+            src={`${BEAT_FILM_URL}${image.formats.thumbnail.url}`}
+            alt={image.name}
             className="movie-card__image"
           />
           <figcaption className="movie-card__desc">
-            <h2 className="movie-card__name">{name}</h2>
-            <p className="movie-card__duration">1ч 17м</p>
+            <h2 className="movie-card__name">{nameRU}</h2>
+            <p className="movie-card__duration">{`${hours}ч ${minutes}м`}</p>
           </figcaption>
         </figure>
       </Link>

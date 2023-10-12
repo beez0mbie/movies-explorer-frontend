@@ -8,7 +8,7 @@ const SavedMovies = () => {
   return (
     <main className="saved-movies">
       <SearchForm />
-      <MoviesCardList shouldRemowe />
+      <MoviesCardList shouldRemove />
       <Preloader isHideButton />
     </main>
   );
