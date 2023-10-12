@@ -1,9 +1,10 @@
 import React from 'react';
 import './Preloader.css';
 
-const Preloader = ({ isHideButton }) => {
+const Preloader = ({ isHideButton, isLoading }) => {
   return (
     <section className={`preloader ${isHideButton && 'preloader_min-height'}`}>
+      {!isLoading && <div className="preloader__loader"></div>}
       {!isHideButton && (
         <button
           type="button"
