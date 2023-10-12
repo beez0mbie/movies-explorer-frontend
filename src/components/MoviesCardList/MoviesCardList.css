@@ -15,6 +15,13 @@
   background-color: #fff;
 }
 
+.movies-cards__error {
+  margin: 0;
+  padding: 0 50px;
+  text-align: center;
+  color: #ff4062;
+}
+
 @media screen and (max-width: 768px) {
   .movies-cards {
     padding: 70px 30px 11px;
