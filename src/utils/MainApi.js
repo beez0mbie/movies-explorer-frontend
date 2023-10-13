@@ -29,36 +29,25 @@ class MainApi extends Api {
    * MOVIES
    */
 
-  addMovie = (
-    country,
-    director,
-    duration_num,
-    year,
-    description,
-    image,
-    trailerLink,
-    thumbnail,
-    movieId_num,
-    nameRU,
-    nameEN,
-  ) =>
-    this._request(`cards`, {
+  addMovie = (movie) => {
+    return this._request(`cards`, {
       method: 'POST',
       headers: this.headers,
       body: JSON.stringify({
-        country,
-        director,
-        duration: duration_num,
-        year,
-        description,
-        image,
-        trailerLink,
-        thumbnail,
-        movieId: movieId_num,
-        nameRU,
-        nameEN,
+        country: movie.country,
+        director: movie.director,
+        duration: movie.duration,
+        year: movie.year,
+        description: movie.description,
+        image: movie.image.url,
+        trailerLink: movie.trailerLink,
+        thumbnail: movie.image.formats.thumbnail.url,
+        movieId: movie.id,
+        nameRU: movie.nameRU,
+        nameEN: movie.nameEN,
       }),
     });
+  };
 
   deleteMovie = (movieId) =>
     this._request(`movies/${movieId}`, {
@@ -91,7 +80,7 @@ class MainApi extends Api {
     });
 
   getAppInfo() {
-    return Promise.all([this.getUser(), this.getMovies()]);
+    return Promise.all([this.getUser(), this.getInitialCards()]);
   }
 }
 

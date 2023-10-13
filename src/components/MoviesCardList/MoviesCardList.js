@@ -1,6 +1,6 @@
 import React from 'react';
 import './MoviesCardList.css';
-import MoviesCard from '../MoviesCard/MoviesCard';
+import MovieCard from '../MovieCard/MovieCard';
 
 const MoviesCardList = ({ movies, shouldRemove, showError, moviesListRef }) => {
   return (
@@ -10,12 +10,13 @@ const MoviesCardList = ({ movies, shouldRemove, showError, moviesListRef }) => {
           ref={moviesListRef}
           className="movies-cards__list">
           {movies.map((movie) => (
-            <MoviesCard
+            <MovieCard
               key={movie.id}
               nameRU={movie.nameRU}
               duration={movie.duration}
               trailerLink={movie.trailerLink}
               image={movie.image}
+              movie={movie}
               shouldRemove={shouldRemove}
             />
           ))}
