@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useForm } from '../../hooks/useForm';
 import './Profile.css';
 import { useNavigate } from 'react-router-dom';
+import { mainApi } from '../../utils/MainApi';
 
-const Profile = () => {
+const Profile = ({ handleExit }) => {
   const { formValues, handleChangeForm } = useForm({
     name: 'Виталий',
     email: 'pochta@yandex.ru',
@@ -13,6 +14,18 @@ const Profile = () => {
   const [isEdit, setIsEdit] = useState(false);
   const handleSubmit = () => {
     console.log('Submit');
+  };
+  const onExit = () => {
+    mainApi
+      .signout()
+      .then((res) => {
+        if (res) {
+          handleExit(false);
+          localStorage.clear();
+          naigate('/');
+        }
+      })
+      .catch((err) => console.error(`Error Profile.handleExit():\n ${err}`));
   };
   return (
     <main className="profile">
@@ -80,10 +93,7 @@ const Profile = () => {
               </button>
               <button
                 type="button"
-                onClick={() => {
-                  localStorage.clear();
-                  naigate('/');
-                }}
+                onClick={onExit}
                 className="profile__button profile__button_red">
                 Выйти из аккаунта
               </button>

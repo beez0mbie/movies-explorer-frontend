@@ -4,7 +4,7 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import searchIcon from '../../images/icon_search.svg';
 import './SearchForm.css';
 import { FormValidator } from '../../utils/FormValidator';
-import { validatorConfig } from '../../utils/validatotConfig';
+import { validatorSearchConfig } from '../../utils/validatotConfig';
 
 const SearchForm = ({ handleSubmit }) => {
   const [searchInput, setSearchInput] = useState(
@@ -15,11 +15,14 @@ const SearchForm = ({ handleSubmit }) => {
   });
 
   const searchForm = useRef(null);
-  const input = useRef(null);
 
   useEffect(() => {
     const form = searchForm.current;
-    const formValidator = new FormValidator(validatorConfig, form, 'Нужно ввести ключевое слово');
+    const formValidator = new FormValidator(
+      validatorSearchConfig,
+      form,
+      'Нужно ввести ключевое слово',
+    );
     formValidator.enableValivation();
   }, []);
 
@@ -43,7 +46,6 @@ const SearchForm = ({ handleSubmit }) => {
               alt="Иконка поиска"
             />
             <input
-              ref={input}
               required
               id="search-input"
               name="search-input"

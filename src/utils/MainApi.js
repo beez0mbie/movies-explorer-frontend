@@ -1,4 +1,4 @@
-import { LOCAL_URL, IS_PRODUCTION } from '../env';
+import { LOCAL_URL, IS_PRODUCTION, BEAT_FILM_URL } from '../env';
 import { Api } from './Api';
 
 class MainApi extends Api {
@@ -30,7 +30,7 @@ class MainApi extends Api {
    */
 
   addMovie = (movie) => {
-    return this._request(`cards`, {
+    return this._request(`movies`, {
       method: 'POST',
       headers: this.headers,
       body: JSON.stringify({
@@ -39,9 +39,9 @@ class MainApi extends Api {
         duration: movie.duration,
         year: movie.year,
         description: movie.description,
-        image: movie.image.url,
+        image: `${BEAT_FILM_URL}${movie.image.url}`,
         trailerLink: movie.trailerLink,
-        thumbnail: movie.image.formats.thumbnail.url,
+        thumbnail: `${BEAT_FILM_URL}${movie.image.formats.thumbnail.url}`,
         movieId: movie.id,
         nameRU: movie.nameRU,
         nameEN: movie.nameEN,

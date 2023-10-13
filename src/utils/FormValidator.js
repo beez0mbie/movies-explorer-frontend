@@ -6,10 +6,10 @@ export class FormValidator {
     this._buttonElement = formElement.querySelector(config.submitButtonSelector);
     this._errorMessage = errorMessage;
   }
-  _showInputError(inputElement) {
+  _showInputError(inputElement, errorMessage) {
     const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.add(this._config.inputErrorClass);
-    errorElement.textContent = this._errorMessage;
+    errorElement.textContent = this._errorMessage || errorMessage;
     errorElement.classList.add(this._config.errorClass);
   }
 
@@ -22,7 +22,7 @@ export class FormValidator {
 
   _checkInputValidity(inputElement) {
     if (!inputElement.validity.valid) {
-      this._showInputError(inputElement);
+      this._showInputError(inputElement, inputElement.validationMessage);
     } else {
       this._hideInputError(inputElement);
     }

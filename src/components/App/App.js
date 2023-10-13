@@ -11,13 +11,17 @@ import { Route, Routes } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.js';
 import SideBar from '../SideBar/SideBar';
 import Header from '../Header/Header';
-import { FormValidator } from '../../utils/FormValidator.js';
-import { validatorConfig, searchForm } from '../../utils/validatotConfig.js';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isOpenSideBar, setIsOpenSideBar] = useState(false);
   const toggleSidebar = () => setIsOpenSideBar((prev) => !prev);
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+  const handleExit = () => {
+    setIsLoggedIn(false);
+  };
   return (
     <div className="app">
       <div className="app__container">
@@ -59,16 +63,17 @@ function App() {
                 isLoggedIn={isLoggedIn}
                 toggleSidebar={toggleSidebar}
                 isHideFooter
+                handleExit={handleExit}
               />
             }
           />
           <Route
             path="/signin"
-            element={<Login />}
+            element={<Login handleLogin={handleLogin} />}
           />
           <Route
             path="/signup"
-            element={<Register />}
+            element={<Register handleLogin={handleLogin} />}
           />
           <Route
             path="*"

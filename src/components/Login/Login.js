@@ -1,18 +1,29 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
 import './Login.css';
 import logo from '../../images/logo.svg';
+import { mainApi } from '../../utils/MainApi';
 
-const Login = () => {
+const Login = ({ handleLogin }) => {
   const { formValues, handleChangeForm } = useForm({
     email: '',
     password: '',
   });
 
+  const navigate = useNavigate();
   const [isError, setIsError] = useState(false);
-  const handleSubmit = () => {
-    console.log('Submit');
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    mainApi
+      .signin(formValues.email, formValues.password)
+      .then((data) => {
+        if (data) {
+          handleLogin();
+          navigate('/movies', { replace: true });
+        }
+      })
+      .catch((e) => console.error('Login', e));
   };
   return (
     <main className="login">
@@ -53,7 +64,7 @@ const Login = () => {
             required
             id="password"
             name="password"
-            minlength="8"
+            minLength="8"
             maxLength="30"
             className={`login__input ${isError && 'login__error_red'}`}
             type="password"
