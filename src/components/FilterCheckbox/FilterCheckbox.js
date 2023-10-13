@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Switch from '../Switch/Switch';
 import './FilterCheckbox.css';
 
 const FilterCheckbox = () => {
-  const [isChecked, setIsChecked] = useState(true);
+  const [isChecked, setIsChecked] = useState(
+    () => JSON.parse(localStorage.getItem('filterCheckboxChecked')) || false,
+  );
+  useEffect(() => {
+    localStorage.setItem('filterCheckboxChecked', JSON.stringify(isChecked));
+  }, [isChecked]);
   return (
     <div className="filter">
       <Switch

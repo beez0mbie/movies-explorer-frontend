@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState, useImperativeHandle } from 'react';
 import { useForm } from '../../hooks/useForm';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import searchIcon from '../../images/icon_search.svg';
@@ -7,17 +7,25 @@ import { FormValidator } from '../../utils/FormValidator';
 import { validatorConfig } from '../../utils/validatotConfig';
 
 const SearchForm = ({ handleSubmit }) => {
+  const [searchInput, setSearchInput] = useState(
+    () => JSON.parse(localStorage.getItem('search-input')) || '',
+  );
   const { formValues, handleChangeForm } = useForm({
-    search: '',
+    'search-input': searchInput || '',
   });
 
   const searchForm = useRef(null);
+  const input = useRef(null);
 
   useEffect(() => {
     const form = searchForm.current;
     const formValidator = new FormValidator(validatorConfig, form, 'Нужно ввести ключевое слово');
     formValidator.enableValivation();
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('search-input', JSON.stringify(formValues['search-input']));
+  }, [formValues['search-input']]);
 
   return (
     <section className="search">
@@ -35,13 +43,14 @@ const SearchForm = ({ handleSubmit }) => {
               alt="Иконка поиска"
             />
             <input
+              ref={input}
               required
               id="search-input"
               name="search-input"
               className="search-form__input" // search-form__input_type_error
               type="text"
               placeholder="Фильм"
-              value={formValues.formValues}
+              value={formValues['search-input']}
               onChange={handleChangeForm}
             />
             <span className="search-form__input-error search-input-error"></span>

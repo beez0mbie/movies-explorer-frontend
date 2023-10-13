@@ -80,7 +80,10 @@ const Profile = () => {
               </button>
               <button
                 type="button"
-                onClick={() => naigate('/')}
+                onClick={() => {
+                  localStorage.clear();
+                  naigate('/');
+                }}
                 className="profile__button profile__button_red">
                 Выйти из аккаунта
               </button>

@@ -21,15 +21,29 @@ const Movies = () => {
 
   const [shouldAddMovies, setShouldAddMovies] = useState(false);
   const [wasSubmit, setWasSubmit] = useState(false);
-  const [movies, setMovies] = useState([]);
-  const [moviesToRender, setMoviesToRender] = useState([]);
-  const [maxPossibleCards, setMaxPossibleCards] = useState(mobileCardsToShow);
+  const [movies, setMovies] = useState(() => JSON.parse(localStorage.getItem('movies')) || []);
+  const [moviesToRender, setMoviesToRender] = useState(
+    () => JSON.parse(localStorage.getItem('moviesToRender')) || [],
+  );
+  const [maxPossibleCards, setMaxPossibleCards] = useState(
+    () => JSON.parse(localStorage.getItem('maxPossibleCards')) || mobileCardsToShow,
+  );
   const [chunk, setChunk] = useState(minChunk);
-  const [moviesListLength, setMoviesListLength] = useState(0);
+  const [moviesListLength, setMoviesListLength] = useState(
+    () => JSON.parse(localStorage.getItem('moviesListLength')) || 0,
+  );
 
   const windowWidth = useWindowWidth();
 
   const moviesList = useRef(null);
+  console.log(moviesToRender);
+
+  useEffect(() => {
+    localStorage.setItem('movies', JSON.stringify(movies));
+    localStorage.setItem('moviesToRender', JSON.stringify(moviesToRender));
+    localStorage.setItem('maxPossibleCards', JSON.stringify(maxPossibleCards));
+    localStorage.setItem('moviesListLength', JSON.stringify(moviesListLength));
+  }, [movies, moviesToRender, maxPossibleCards, moviesListLength]);
 
   useEffect(() => {
     if (windowWidth >= desktopMinWidth) {
@@ -48,7 +62,8 @@ const Movies = () => {
       }
       setChunk(minChunk);
     }
-    setMoviesToRender(movies.slice(0, maxPossibleCards));
+    const moviesToRenderLocal = movies.slice(0, maxPossibleCards);
+    setMoviesToRender(moviesToRenderLocal);
   }, [windowWidth, movies, setMoviesToRender, maxPossibleCards, chunk, moviesListLength]);
 
   useEffect(() => {
