@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
 import './Register.css';
@@ -6,6 +6,7 @@ import logo from '../../images/logo.svg';
 import { FormValidator } from '../../utils/FormValidator';
 import { validatorConfigRegister } from '../../utils/validatotConfig';
 import { mainApi } from '../../utils/MainApi';
+import { CurrentUserContext } from '../../contexts';
 
 const Register = ({ handleLogin }) => {
   const { formValues, handleChangeForm } = useForm({
@@ -13,6 +14,7 @@ const Register = ({ handleLogin }) => {
     'register-email': '',
     'register-password': '',
   });
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 
   const registerForm = useRef(null);
   const navigate = useNavigate();
@@ -33,11 +35,23 @@ const Register = ({ handleLogin }) => {
         formValues['register-name'],
       )
       .then((res) => {
-        console.log('RegisterRes', res);
         mainApi
           .signin(formValues['register-email'], formValues['register-password'])
           .then((data) => {
             if (data) {
+              mainApi
+                .getUser()
+                .then((res) => {
+                  setCurrentUser({
+                    name: res.name,
+                    email: res.email,
+                    _id: res._id,
+                  });
+                })
+                .catch((e) => {
+                  setIsError(true);
+                  console.error('RegisterError getUser error', e);
+                });
               handleLogin();
               navigate('/movies', { replace: true });
             }
@@ -47,7 +61,7 @@ const Register = ({ handleLogin }) => {
       })
       .catch((e) => {
         setIsError(true);
-        console.error('RegisterError', e);
+        console.error('RegisterError handleSubmit error', e);
       });
   };
 

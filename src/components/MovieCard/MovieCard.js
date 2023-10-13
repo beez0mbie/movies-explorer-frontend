@@ -18,7 +18,7 @@ const MovieCard = ({ movie, shouldRemowe }) => {
         mainApi.deleteMovie(movie.id);
       }
     } catch (error) {
-      console.log('MovieCard', error);
+      console.error('MovieCard handleLikeCard', error);
     }
     setLike((prev) => !prev);
   };
@@ -28,7 +28,7 @@ const MovieCard = ({ movie, shouldRemowe }) => {
     try {
       mainApi.deleteMovie(movie.id);
     } catch (error) {
-      console.log('MovieCard', error);
+      console.error('MovieCard handleRemoveCard', error);
     }
   };
 

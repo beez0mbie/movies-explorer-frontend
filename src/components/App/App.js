@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Main from '../Main/Main.js';
 import './App.css';
 import Movies from '../Movies/Movies.js';
@@ -10,11 +10,42 @@ import NotFound from '../NotFound/NotFound.js';
 import { Route, Routes } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.js';
 import SideBar from '../SideBar/SideBar';
-import Header from '../Header/Header';
+import { CurrentUserContext } from '../../contexts';
+import { mainApi } from '../../utils/MainApi.js';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isOpenSideBar, setIsOpenSideBar] = useState(false);
+  const [currentUser, setCurrentUser] = useState({
+    name: '',
+    email: '',
+    _id: '',
+  });
+  const currentUserValue = useMemo(() => ({ currentUser, setCurrentUser }), [currentUser]);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      handleTokenCheck();
+    }
+  }, [isLoggedIn]);
+
+  const handleTokenCheck = () => {
+    mainApi
+      .getUser()
+      .then((res) => {
+        if (res) {
+          const { email, name, _id } = res;
+          setCurrentUser({
+            _id,
+            name,
+            email,
+          });
+          setIsLoggedIn(true);
+        }
+      })
+      .catch((err) => console.error(`Error apiAuth.checkToken():\n ${err}`));
+  };
+
   const toggleSidebar = () => setIsOpenSideBar((prev) => !prev);
   const handleLogin = () => {
     setIsLoggedIn(true);
@@ -23,69 +54,71 @@ function App() {
     setIsLoggedIn(false);
   };
   return (
-    <div className="app">
-      <div className="app__container">
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Main
-                isLoggedIn={isLoggedIn}
-                toggleSidebar={toggleSidebar}
-              />
-            }
-          />
-          <Route
-            path="/movies"
-            element={
-              <ProtectedRoute
-                element={Movies}
-                isLoggedIn={isLoggedIn}
-                toggleSidebar={toggleSidebar}
-              />
-            }
-          />
-          <Route
-            path="/saved-movies"
-            element={
-              <ProtectedRoute
-                element={SavedMovies}
-                isLoggedIn={isLoggedIn}
-                toggleSidebar={toggleSidebar}
-              />
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute
-                element={Profile}
-                isLoggedIn={isLoggedIn}
-                toggleSidebar={toggleSidebar}
-                isHideFooter
-                handleExit={handleExit}
-              />
-            }
-          />
-          <Route
-            path="/signin"
-            element={<Login handleLogin={handleLogin} />}
-          />
-          <Route
-            path="/signup"
-            element={<Register handleLogin={handleLogin} />}
-          />
-          <Route
-            path="*"
-            element={<NotFound />}
-          />
-        </Routes>
+    <CurrentUserContext.Provider value={currentUserValue}>
+      <div className="app">
+        <div className="app__container">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Main
+                  isLoggedIn={isLoggedIn}
+                  toggleSidebar={toggleSidebar}
+                />
+              }
+            />
+            <Route
+              path="/movies"
+              element={
+                <ProtectedRoute
+                  element={Movies}
+                  isLoggedIn={isLoggedIn}
+                  toggleSidebar={toggleSidebar}
+                />
+              }
+            />
+            <Route
+              path="/saved-movies"
+              element={
+                <ProtectedRoute
+                  element={SavedMovies}
+                  isLoggedIn={isLoggedIn}
+                  toggleSidebar={toggleSidebar}
+                />
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute
+                  element={Profile}
+                  isLoggedIn={isLoggedIn}
+                  toggleSidebar={toggleSidebar}
+                  isHideFooter
+                  handleExit={handleExit}
+                />
+              }
+            />
+            <Route
+              path="/signin"
+              element={<Login handleLogin={handleLogin} />}
+            />
+            <Route
+              path="/signup"
+              element={<Register handleLogin={handleLogin} />}
+            />
+            <Route
+              path="*"
+              element={<NotFound />}
+            />
+          </Routes>
+        </div>
+        <SideBar
+          isOpen={isOpenSideBar}
+          toggleSidebar={toggleSidebar}
+        />
       </div>
-      <SideBar
-        isOpen={isOpenSideBar}
-        toggleSidebar={toggleSidebar}
-      />
-    </div>
+    </CurrentUserContext.Provider>
   );
 }
 

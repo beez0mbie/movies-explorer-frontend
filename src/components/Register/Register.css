@@ -40,6 +40,10 @@
   flex-direction: column;
 }
 
+.register-form__field:first-child {
+  padding-top: 20px;
+}
+
 .register-form__label {
   padding-top: 20px;
   padding-bottom: 10px;
@@ -49,10 +53,6 @@
   line-height: 12px;
   letter-spacing: 0em;
   text-align: left;
-}
-
-.register-form__field:first-child {
-  padding-top: 20px;
 }
 
 .register-form__input {
@@ -68,6 +68,10 @@
 
 .register-form__input:focus {
   outline: 1px solid #4083ff;
+}
+
+.register-form__input_type_error {
+  border: solid 1px#ff4062;
 }
 
 .register-form__input_red {

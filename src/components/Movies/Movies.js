@@ -36,7 +36,6 @@ const Movies = () => {
   const windowWidth = useWindowWidth();
 
   const moviesList = useRef(null);
-  console.log(moviesToRender);
 
   useEffect(() => {
     localStorage.setItem('movies', JSON.stringify(movies));
@@ -101,7 +100,7 @@ const Movies = () => {
       const items = await moviesApi.getMovies();
       setMovies(items);
     } catch (error) {
-      console.log('Movies -> handleSubmit', error);
+      console.error('Movies handleSubmit', error);
       setShowError(true);
     }
     setWasSubmit(true);
