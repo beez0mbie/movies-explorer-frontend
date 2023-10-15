@@ -22,7 +22,6 @@ const Profile = ({ handleExit }) => {
       .updateUser(formValues.email, formValues.name)
       .then((data) => {
         if (data) {
-          console.log('updateUser data', data);
           setCurrentUser({
             name: data.name,
             email: data.email,

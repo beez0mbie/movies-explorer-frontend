@@ -1,10 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import './Movies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import { moviesApi } from '../../utils/MoviesApi';
 import { useWindowWidth } from '../../hooks/useWindowWidth';
+import { processMovies } from '../../utils/processMovie';
+import { mainApi } from '../../utils/MainApi';
+import { SavedMoviesContext } from '../../contexts';
 
 const Movies = () => {
   const desktopMinWidth = 1052;
@@ -36,6 +39,19 @@ const Movies = () => {
   const windowWidth = useWindowWidth();
 
   const moviesList = useRef(null);
+
+  const { savedMovies, setSavedMovies } = useContext(SavedMoviesContext);
+
+  useEffect(() => {
+    mainApi
+      .getMovies()
+      .then((data) => {
+        if (data) {
+          setSavedMovies(data);
+        }
+      })
+      .catch((err) => console.error(`Error mainApi.getMovies():\n ${err}`));
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('movies', JSON.stringify(movies));
@@ -98,7 +114,8 @@ const Movies = () => {
     setShowError(false);
     try {
       const items = await moviesApi.getMovies();
-      setMovies(items);
+      const processedMovies = processMovies(items);
+      setMovies(processedMovies);
     } catch (error) {
       console.error('Movies handleSubmit', error);
       setShowError(true);
@@ -118,6 +135,7 @@ const Movies = () => {
         movies={moviesToRender}
         showError={showError}
         moviesListRef={moviesList}
+        moviesToRender={moviesToRender}
       />
       <Preloader
         showMessage={showMessage}

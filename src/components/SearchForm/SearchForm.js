@@ -9,44 +9,34 @@ import { useLocation } from 'react-router-dom';
 
 const SearchForm = ({ handleSubmit }) => {
   const location = useLocation();
-  const moviesLocalStorageName = 'movies-search-input';
-  const savedMoviesLocalStorageName = 'saved-movies-search-input';
-  const moviesCheckboxLocalStorageName = 'movies-filter-checkbox';
-  const savedMoviesCheckboxLocalStorageName = 'saved-movies-filter-checkbox';
   const moviesPath = '/movies';
-  const searchMoviesPath = '/saved-movies';
+  const savedMoviesPath = '/saved-movies';
 
-  const [searchInput, setSearchInput] = useState(() => {
-    if (location.pathname === moviesPath) {
-      return JSON.parse(localStorage.getItem(moviesLocalStorageName)) || '';
-    }
-    if (location.pathname === searchMoviesPath) {
-      return JSON.parse(localStorage.getItem(savedMoviesLocalStorageName)) || '';
-    }
-  });
+  const moviesStateLocalStorageName = 'movies-search-state';
+  const savedMoviesStateLocalStorageName = 'saved-movies-search-state';
 
-  const [isCheckboxChecked, setIsCheckboxChecked] = useState(() => {
-    if (location.pathname === moviesPath) {
-      return JSON.parse(localStorage.getItem(moviesCheckboxLocalStorageName)) || false;
-    }
-    if (location.pathname === searchMoviesPath) {
-      return JSON.parse(localStorage.getItem(savedMoviesCheckboxLocalStorageName)) || false;
-    }
-  });
+  let searchLocalStorageState = {
+    input: '',
+    checkbox: false,
+  };
+  const moviesLocalStorage = localStorage.getItem(moviesStateLocalStorageName);
+  const savedMoviesLocalStorage = localStorage.getItem(savedMoviesStateLocalStorageName);
+
+  if (location.pathname === moviesPath && moviesLocalStorage) {
+    searchLocalStorageState = JSON.parse(localStorage.getItem(moviesStateLocalStorageName));
+  }
+
+  if (location.pathname === savedMoviesPath && savedMoviesLocalStorage) {
+    searchLocalStorageState = JSON.parse(localStorage.getItem(savedMoviesStateLocalStorageName));
+  }
 
   const { formValues, handleChangeForm } = useForm({
-    'search-input': searchInput || '',
+    'search-input': searchLocalStorageState.input,
   });
 
-  // const [checkboxIsChecked, setCheckboxIsChecked] = useState(
-  //   () => JSON.parse(localStorage.getItem('filterCheckboxChecked')) || false,
-  // );
+  const [checkboxIsChecked, setCheckboxIsChecked] = useState(searchLocalStorageState.checkbox);
 
   const searchForm = useRef(null);
-
-  // useEffect(() => {
-  //   localStorage.setItem('filterCheckboxChecked', JSON.stringify(checkboxIsChecked));
-  // }, [checkboxIsChecked]);
 
   useEffect(() => {
     const form = searchForm.current;
@@ -59,20 +49,28 @@ const SearchForm = ({ handleSubmit }) => {
   }, []);
 
   useEffect(() => {
-    console.log('isCheckboxChecked change');
     if (location.pathname === moviesPath) {
-      localStorage.setItem(moviesLocalStorageName, JSON.stringify(formValues['search-input']));
-      localStorage.setItem(moviesCheckboxLocalStorageName, JSON.stringify(isCheckboxChecked));
+      localStorage.setItem(
+        moviesStateLocalStorageName,
+        JSON.stringify({
+          input: formValues['search-input'],
+          checkbox: checkboxIsChecked,
+        }),
+      );
     }
-    if (location.pathname === searchMoviesPath) {
-      localStorage.setItem(savedMoviesLocalStorageName, JSON.stringify(formValues['search-input']));
-      localStorage.setItem(savedMoviesCheckboxLocalStorageName, JSON.stringify(isCheckboxChecked));
+    if (location.pathname === savedMoviesPath) {
+      localStorage.setItem(
+        savedMoviesStateLocalStorageName,
+        JSON.stringify({
+          input: formValues['search-input'],
+          checkbox: checkboxIsChecked,
+        }),
+      );
     }
-  }, [formValues['search-input'], isCheckboxChecked, location.pathname]);
+  }, [formValues['search-input'], checkboxIsChecked, location.pathname]);
 
-  const handleCheckbox = () => {
-    setIsCheckboxChecked((prev) => !prev);
-    console.log('cahngeChakbox', isCheckboxChecked);
+  const handleCheckboxState = () => {
+    setCheckboxIsChecked((prev) => !prev);
   };
 
   return (
@@ -108,8 +106,8 @@ const SearchForm = ({ handleSubmit }) => {
             </button>
           </div>
           <FilterCheckbox
-            isChecked={isCheckboxChecked}
-            handleCheckbox={handleCheckbox}
+            isChecked={checkboxIsChecked}
+            handleCheckbox={handleCheckboxState}
           />
         </form>
       </div>

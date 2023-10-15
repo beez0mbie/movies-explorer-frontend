@@ -1,35 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import './MovieCard.css';
 import { Link } from 'react-router-dom';
-import { BEAT_FILM_URL } from '../../env';
 import { mainApi } from '../../utils/MainApi';
+import { SavedMoviesContext } from '../../contexts';
 
-const MovieCard = ({ movie, shouldRemowe }) => {
+const MovieCard = ({ movie, shouldRemove }) => {
   const hours = Math.floor(movie.duration / 60);
   const minutes = movie.duration % 60;
   const [like, setLike] = useState(false);
+  const { savedMovies, setSavedMovies } = useContext(SavedMoviesContext);
+
+  const foundSavedCardIndex = savedMovies.findIndex((element) => element.movieId === movie.movieId);
+
+  useEffect(() => {
+    if (foundSavedCardIndex >= 0) {
+      setLike(true);
+    } else {
+      setLike(false);
+    }
+  }, [savedMovies, foundSavedCardIndex]);
 
   const handleLikeCard = (e) => {
     e.preventDefault();
     try {
-      if (!like) {
-        mainApi.addMovie(movie);
+      if (foundSavedCardIndex === -1) {
+        mainApi
+          .addMovie(movie)
+          .then((data) => {
+            setLike(true);
+            setSavedMovies((oldArray) => [data, ...oldArray]);
+          })
+          .catch((err) => console.error(`MovieCard mainApi.addMovie():\n ${err}`));
       } else {
-        mainApi.deleteMovie(movie.id);
+        deleteMovieCard(movie.movieId);
+        setLike(false);
       }
     } catch (error) {
       console.error('MovieCard handleLikeCard', error);
     }
-    setLike((prev) => !prev);
+  };
+
+  const deleteMovieCard = (movieId) => {
+    mainApi
+      .deleteMovie(movieId)
+      .then(() => {
+        setSavedMovies((state) => state.filter((movie) => movie.movieId !== movieId));
+        setLike(false);
+      })
+      .catch((err) => console.error(`MovieCard mainApi.deleteMovie():\n ${err}`));
   };
 
   const handleRemoveCard = (e) => {
     e.preventDefault();
-    try {
-      mainApi.deleteMovie(movie.id);
-    } catch (error) {
-      console.error('MovieCard handleRemoveCard', error);
-    }
+    deleteMovieCard(movie.movieId);
   };
 
   return (
@@ -38,7 +61,7 @@ const MovieCard = ({ movie, shouldRemowe }) => {
         className="movie-card__link"
         to={movie.trailerLink}
         target="_blank">
-        {shouldRemowe ? (
+        {shouldRemove ? (
           <button
             className="movie-card__remove"
             onClick={handleRemoveCard}></button>
@@ -51,8 +74,8 @@ const MovieCard = ({ movie, shouldRemowe }) => {
         )}
         <figure className="movie-card__image-container">
           <img
-            src={`${BEAT_FILM_URL}${movie.image.formats.thumbnail.url}`}
-            alt={movie.image.name}
+            src={movie.thumbnail}
+            alt={`thumbnail of ${movie.nameRU}`}
             className="movie-card__image"
           />
           <figcaption className="movie-card__desc">

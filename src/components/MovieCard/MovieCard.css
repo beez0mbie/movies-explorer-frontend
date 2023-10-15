@@ -35,7 +35,12 @@
   /* плавное появление */
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s linear 0.3s, opacity 0.3s linear;
+  cursor: pointer;
+  transition: visibility 0s linear 0.3s, opacity 0.3s linear, background-color 0.3s;
+}
+
+.movie-card__like:hover {
+  background-color: #e2e2e2;
 }
 
 .movie-card__like-paragraph {
@@ -54,6 +59,10 @@
   background-color: #ff4062;
 }
 
+.movie-card__like_active:hover {
+  background-color: #fa224a;
+}
+
 .movie-card:hover .movie-card__remove {
   /* плавное появление */
   visibility: visible;
@@ -65,6 +74,8 @@
   position: absolute;
   top: 15px;
   right: 15px;
+  border: 0;
+  cursor: pointer;
   border-radius: 30px;
   visibility: hidden;
   opacity: 0;
@@ -72,7 +83,11 @@
   height: 21px;
   background: center no-repeat url('../../images/icon_remove.svg');
   background-color: #f9f9f9;
-  transition: opacity 0.4s;
+  transition: opacity 0.4s, background-color 0.4s;
+}
+
+.movie-card__remove:hover {
+  background-color: #e2e2e2;
 }
 
 .movie-card__image-container {

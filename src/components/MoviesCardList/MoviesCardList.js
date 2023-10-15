@@ -2,7 +2,14 @@ import React from 'react';
 import './MoviesCardList.css';
 import MovieCard from '../MovieCard/MovieCard';
 
-const MoviesCardList = ({ movies, shouldRemove, showError, moviesListRef }) => {
+const MoviesCardList = ({
+  movies,
+  shouldRemove,
+  showError,
+  moviesListRef,
+  handleDeleteMovie,
+  moviesToRender,
+}) => {
   return (
     <section className="movies-cards">
       {movies && movies.length > 0 && (
@@ -11,13 +18,11 @@ const MoviesCardList = ({ movies, shouldRemove, showError, moviesListRef }) => {
           className="movies-cards__list">
           {movies.map((movie) => (
             <MovieCard
-              key={movie.id}
-              nameRU={movie.nameRU}
-              duration={movie.duration}
-              trailerLink={movie.trailerLink}
-              image={movie.image}
+              key={movie.movieId}
               movie={movie}
               shouldRemove={shouldRemove}
+              handleDeleteMovie={handleDeleteMovie}
+              moviesToRender={moviesToRender}
             />
           ))}
         </ul>
