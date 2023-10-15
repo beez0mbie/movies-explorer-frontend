@@ -7,7 +7,7 @@ import Register from '../Register/Register.js';
 import Login from '../Login/Login.js';
 import Profile from '../Profile/Profile.js';
 import NotFound from '../NotFound/NotFound.js';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.js';
 import SideBar from '../SideBar/SideBar';
 import { CurrentUserContext } from '../../contexts';
@@ -22,12 +22,15 @@ function App() {
     _id: '',
   });
   const currentUserValue = useMemo(() => ({ currentUser, setCurrentUser }), [currentUser]);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(location);
     if (!isLoggedIn) {
       handleTokenCheck();
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, location]);
 
   const handleTokenCheck = () => {
     mainApi
@@ -41,6 +44,7 @@ function App() {
             email,
           });
           setIsLoggedIn(true);
+          navigate('/movies', { replace: true });
         }
       })
       .catch((err) => console.error(`Error apiAuth.checkToken():\n ${err}`));

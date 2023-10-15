@@ -2,19 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Switch from '../Switch/Switch';
 import './FilterCheckbox.css';
 
-const FilterCheckbox = () => {
-  const [isChecked, setIsChecked] = useState(
-    () => JSON.parse(localStorage.getItem('filterCheckboxChecked')) || false,
-  );
-  useEffect(() => {
-    localStorage.setItem('filterCheckboxChecked', JSON.stringify(isChecked));
-  }, [isChecked]);
+const FilterCheckbox = ({ isChecked, handleCheckbox }) => {
   return (
     <div className="filter">
       <Switch
-        onChange={() => {
-          setIsChecked((prev) => !prev);
-        }}
+        onChange={handleCheckbox}
         isChecked={isChecked}
       />
       <p className="filter__desc">Короткометражки</p>
