@@ -25,6 +25,9 @@ const Movies = () => {
   const [shouldAddMovies, setShouldAddMovies] = useState(false);
   const [wasSubmit, setWasSubmit] = useState(false);
   const [movies, setMovies] = useState(() => JSON.parse(localStorage.getItem('movies')) || []);
+  const [allMovies, setAllMovies] = useState(
+    () => JSON.parse(localStorage.getItem('all-movies')) || [],
+  );
   const [moviesToRender, setMoviesToRender] = useState(
     () => JSON.parse(localStorage.getItem('moviesToRender')) || [],
   );
@@ -55,10 +58,11 @@ const Movies = () => {
 
   useEffect(() => {
     localStorage.setItem('movies', JSON.stringify(movies));
+    localStorage.setItem('all-movies', JSON.stringify(allMovies));
     localStorage.setItem('moviesToRender', JSON.stringify(moviesToRender));
     localStorage.setItem('maxPossibleCards', JSON.stringify(maxPossibleCards));
     localStorage.setItem('moviesListLength', JSON.stringify(moviesListLength));
-  }, [movies, moviesToRender, maxPossibleCards, moviesListLength]);
+  }, [movies, moviesToRender, maxPossibleCards, moviesListLength, allMovies]);
 
   useEffect(() => {
     if (windowWidth >= desktopMinWidth) {
@@ -108,13 +112,14 @@ const Movies = () => {
     };
   }, [movies, wasSubmit, showMessage]);
 
-  const handleSubmit = async (searchText) => {
+  const handleSubmit = async (searchText, checkbox) => {
     setWasSubmit(false);
     setIsLoading(true);
     setShowError(false);
     try {
       const items = await moviesApi.getMovies();
-      const processedMovies = processMovies(items, searchText);
+      setAllMovies(items);
+      const processedMovies = processMovies(items, searchText, checkbox);
       setMovies(processedMovies);
     } catch (error) {
       console.error('Movies handleSubmit', error);
@@ -124,13 +129,23 @@ const Movies = () => {
     setIsLoading(false);
   };
 
+  const handleProcess = async (searchText, checkbox) => {
+    setIsLoading(true);
+    const processedMovies = processMovies(allMovies, searchText, checkbox);
+    setMovies(processedMovies);
+    setIsLoading(false);
+  };
+
   const handleMoreClick = () => {
     setMaxPossibleCards((prev) => prev + chunk);
   };
 
   return (
     <main className="movies">
-      <SearchForm handleSubmit={handleSubmit} />
+      <SearchForm
+        handleSubmit={handleSubmit}
+        handleProcess={handleProcess}
+      />
       <MoviesCardList
         movies={moviesToRender}
         showError={showError}

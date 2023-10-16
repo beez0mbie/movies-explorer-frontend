@@ -7,7 +7,7 @@ import { FormValidator } from '../../utils/FormValidator';
 import { validatorSearchConfig } from '../../utils/validatotConfig';
 import { useLocation } from 'react-router-dom';
 
-const SearchForm = ({ handleSubmit }) => {
+const SearchForm = ({ handleSubmit, handleProcess }) => {
   const location = useLocation();
   const moviesPath = '/movies';
   const savedMoviesPath = '/saved-movies';
@@ -69,6 +69,10 @@ const SearchForm = ({ handleSubmit }) => {
     }
   }, [formValues['search-input'], checkboxIsChecked, location.pathname]);
 
+  useEffect(() => {
+    handleProcess(formValues['search-input'], checkboxIsChecked);
+  }, [checkboxIsChecked]);
+
   const handleCheckboxState = () => {
     setCheckboxIsChecked((prev) => !prev);
   };
@@ -77,7 +81,7 @@ const SearchForm = ({ handleSubmit }) => {
     <section className="search">
       <div className="search__container">
         <form
-          onSubmit={() => handleSubmit(formValues['search-input'])}
+          onSubmit={() => handleSubmit(formValues['search-input'], checkboxIsChecked)}
           id="search-form"
           className="search-form"
           ref={searchForm}

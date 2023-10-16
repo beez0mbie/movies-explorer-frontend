@@ -8,6 +8,7 @@ import { SavedMoviesContext } from '../../contexts';
 import { processMovies } from '../../utils/processMovie';
 
 const SavedMovies = () => {
+  const savedMoviesStateLocalStorageName = 'saved-movies-search-state';
   const [wasSubmit, setWasSubmit] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showError, setShowError] = useState(false);
@@ -32,17 +33,30 @@ const SavedMovies = () => {
       .then((data) => {
         if (data) {
           setSavedMovies(data);
+          const searchLocalStorageState = JSON.parse(
+            localStorage.getItem(savedMoviesStateLocalStorageName),
+          );
+          if (searchLocalStorageState.input || searchLocalStorageState.checkbox) {
+            const processedMovies = processMovies(
+              savedMovies,
+              searchLocalStorageState.input,
+              searchLocalStorageState.checkbox,
+            );
+            setMovies(processedMovies);
+          } else {
+            setMovies(data);
+          }
         }
       })
       .catch((err) => console.error(`Error mainApi.getMovies():\n ${err}`));
   }, []);
 
-  const handleSubmit = async (searchText) => {
+  const handleSubmit = async (searchText, checkbox) => {
     setWasSubmit(false);
     setIsLoading(true);
     setShowError(false);
     try {
-      const processedMovies = processMovies(savedMovies, searchText);
+      const processedMovies = processMovies(savedMovies, searchText, checkbox);
       setMovies(processedMovies);
     } catch (error) {
       console.error('Saved Movies handleSubmit', error);
@@ -52,9 +66,19 @@ const SavedMovies = () => {
     setIsLoading(false);
   };
 
+  const handleProcess = async (searchText, checkbox) => {
+    setIsLoading(true);
+    const processedMovies = processMovies(savedMovies, searchText, checkbox);
+    setMovies(processedMovies);
+    setIsLoading(false);
+  };
+
   return (
     <main className="saved-movies">
-      <SearchForm handleSubmit={handleSubmit} />
+      <SearchForm
+        handleSubmit={handleSubmit}
+        handleProcess={handleProcess}
+      />
       <MoviesCardList
         movies={movies}
         shouldRemove={true}
