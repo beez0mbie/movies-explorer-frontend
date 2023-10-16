@@ -46,14 +46,16 @@ const Movies = () => {
   const { savedMovies, setSavedMovies } = useContext(SavedMoviesContext);
 
   useEffect(() => {
-    mainApi
-      .getMovies()
-      .then((data) => {
-        if (data) {
-          setSavedMovies(data);
-        }
-      })
-      .catch((err) => console.error(`Error mainApi.getMovies():\n ${err}`));
+    if (savedMovies.length === 0) {
+      mainApi
+        .getMovies()
+        .then((data) => {
+          if (data) {
+            setSavedMovies(data);
+          }
+        })
+        .catch((err) => console.error(`Error mainApi.getMovies():\n ${err}`));
+    }
   }, []);
 
   useEffect(() => {

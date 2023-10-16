@@ -19,6 +19,10 @@ const SavedMovies = () => {
   const [movies, setMovies] = useState(savedMovies || []);
 
   useEffect(() => {
+    setMovies(savedMovies);
+  }, [savedMovies]);
+
+  useEffect(() => {
     if (wasSubmit && movies && movies.length === 0) {
       setShowMessage(true);
     }

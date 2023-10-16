@@ -4,7 +4,6 @@ export const processMovies = (movies, searchText, checkbox) => {
   let moviesToProcess = movies;
 
   if (checkbox) {
-    console.log('process checkbox');
     moviesToProcess = moviesToProcess.filter((movie) => {
       const isShort = Math.floor(movie.duration / 40) < 1;
       return isShort;
