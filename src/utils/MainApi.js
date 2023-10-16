@@ -1,4 +1,4 @@
-import { LOCAL_URL, IS_PRODUCTION, BEAT_FILM_URL } from '../env';
+import { LOCAL_URL, IS_PRODUCTION, MAIN_URL } from '../env';
 import { Api } from './Api';
 
 class MainApi extends Api {
@@ -85,10 +85,10 @@ class MainApi extends Api {
 }
 
 export const mainApi = new MainApi({
-  baseUrl: LOCAL_URL,
+  baseUrl: IS_PRODUCTION ? MAIN_URL : LOCAL_URL,
   headers: {
     'Content-Type': 'application/json',
-    Origin: LOCAL_URL,
+    Origin: IS_PRODUCTION ? MAIN_URL : LOCAL_URL,
   },
   credentials: IS_PRODUCTION ? 'include' : undefined,
 });
