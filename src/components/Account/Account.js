@@ -3,11 +3,12 @@ import iconAccountPink from '../../images/icon_account-pink.svg';
 import iconAccountBlack from '../../images/icon_account-black.svg';
 import './Account.css';
 import { Link } from 'react-router-dom';
+import { pathNames } from '../../utils/constants';
 
 const Account = ({ isPink }) => {
   return (
     <Link
-      to="/profile"
+      to={pathNames.profile}
       className="account">
       <p className="account__desc">Аккаунт</p>
       <div className={`account__logo-container ${isPink && 'account__logo-container_pink'}`}>

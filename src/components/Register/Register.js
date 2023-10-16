@@ -7,6 +7,7 @@ import { FormValidator } from '../../utils/FormValidator';
 import { validatorConfigRegister } from '../../utils/validatotConfig';
 import { mainApi } from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts';
+import { pathNames } from '../../utils/constants';
 
 const Register = ({ handleLogin }) => {
   const { formValues, handleChangeForm } = useForm({
@@ -53,11 +54,11 @@ const Register = ({ handleLogin }) => {
                   console.error('RegisterError getUser error', e);
                 });
               handleLogin();
-              navigate('/movies', { replace: true });
+              navigate(pathNames.movies, { replace: true });
             }
           })
           .catch((e) => console.error('Login', e));
-        navigate('/movies', { replace: true });
+        navigate(pathNames.movies, { replace: true });
       })
       .catch((e) => {
         setIsError(true);
@@ -68,7 +69,7 @@ const Register = ({ handleLogin }) => {
   return (
     <main className="register">
       <section className="register__container">
-        <Link to="/">
+        <Link to={pathNames.root}>
           <img
             src={logo}
             alt="Логотип"
@@ -147,7 +148,7 @@ const Register = ({ handleLogin }) => {
         <div className="register__signin">
           <p className="register__signin-desc">Уже зарегистрированы?</p>
           <Link
-            to="/signin"
+            to={pathNames.signIn}
             className="register__signin-link">
             Войти
           </Link>

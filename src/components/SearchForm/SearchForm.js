@@ -6,28 +6,28 @@ import './SearchForm.css';
 import { FormValidator } from '../../utils/FormValidator';
 import { validatorSearchConfig } from '../../utils/validatotConfig';
 import { useLocation } from 'react-router-dom';
+import { moviesSearchLocalStore, savedMoviesSearchLocalStore } from '../../utils/constants';
+import { getLocalStore, setLocalStore } from '../../utils/localStorage';
+
+import { pathNames } from '../../utils/constants';
 
 const SearchForm = ({ handleSubmit, handleProcess }) => {
   const location = useLocation();
-  const moviesPath = '/movies';
-  const savedMoviesPath = '/saved-movies';
-
-  const moviesStateLocalStorageName = 'movies-search-state';
-  const savedMoviesStateLocalStorageName = 'saved-movies-search-state';
 
   let searchLocalStorageState = {
     input: '',
     checkbox: false,
   };
-  const moviesLocalStorage = localStorage.getItem(moviesStateLocalStorageName);
-  const savedMoviesLocalStorage = localStorage.getItem(savedMoviesStateLocalStorageName);
 
-  if (location.pathname === moviesPath && moviesLocalStorage) {
-    searchLocalStorageState = JSON.parse(localStorage.getItem(moviesStateLocalStorageName));
+  const moviesLocalStorage = getLocalStore(moviesSearchLocalStore);
+  const savedMoviesLocalStorage = getLocalStore(savedMoviesSearchLocalStore);
+
+  if (location.pathname === pathNames.movies && moviesLocalStorage) {
+    searchLocalStorageState = moviesLocalStorage;
   }
 
-  if (location.pathname === savedMoviesPath && savedMoviesLocalStorage) {
-    searchLocalStorageState = JSON.parse(localStorage.getItem(savedMoviesStateLocalStorageName));
+  if (location.pathname === pathNames.savedMovies && savedMoviesLocalStorage) {
+    searchLocalStorageState = savedMoviesLocalStorage;
   }
 
   const { formValues, handleChangeForm } = useForm({
@@ -49,23 +49,17 @@ const SearchForm = ({ handleSubmit, handleProcess }) => {
   }, []);
 
   useEffect(() => {
-    if (location.pathname === moviesPath) {
-      localStorage.setItem(
-        moviesStateLocalStorageName,
-        JSON.stringify({
-          input: formValues['search-input'],
-          checkbox: checkboxIsChecked,
-        }),
-      );
+    if (location.pathname === pathNames.movies) {
+      setLocalStore(moviesSearchLocalStore, {
+        input: formValues['search-input'],
+        checkbox: checkboxIsChecked,
+      });
     }
-    if (location.pathname === savedMoviesPath) {
-      localStorage.setItem(
-        savedMoviesStateLocalStorageName,
-        JSON.stringify({
-          input: formValues['search-input'],
-          checkbox: checkboxIsChecked,
-        }),
-      );
+    if (location.pathname === pathNames.savedMovies) {
+      setLocalStore(savedMoviesSearchLocalStore, {
+        input: formValues['search-input'],
+        checkbox: checkboxIsChecked,
+      });
     }
   }, [formValues['search-input'], checkboxIsChecked, location.pathname]);
 

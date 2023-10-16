@@ -2,6 +2,7 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import { pathNames } from '../../utils/constants';
 
 const ProtectedRoute = ({ element: Component, ...props }) => {
   return props.isLoggedIn ? (
@@ -12,7 +13,7 @@ const ProtectedRoute = ({ element: Component, ...props }) => {
     </>
   ) : (
     <Navigate
-      to="/signin"
+      to={pathNames.signIn}
       replace
     />
   );

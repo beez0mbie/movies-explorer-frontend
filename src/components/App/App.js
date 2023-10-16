@@ -12,6 +12,7 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.js';
 import SideBar from '../SideBar/SideBar';
 import { CurrentUserContext, SavedMoviesContext } from '../../contexts';
 import { mainApi } from '../../utils/MainApi.js';
+import { pathNames } from '../../utils/constants';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -45,7 +46,7 @@ function App() {
             email,
           });
           setIsLoggedIn(true);
-          navigate('/movies', { replace: true });
+          navigate(pathNames.movies, { replace: true });
         }
       })
       .catch((err) => console.error(`Error apiAuth.checkToken():\n ${err}`));
@@ -65,7 +66,7 @@ function App() {
           <div className="app__container">
             <Routes>
               <Route
-                path="/"
+                path={pathNames.root}
                 element={
                   <Main
                     isLoggedIn={isLoggedIn}
@@ -74,7 +75,7 @@ function App() {
                 }
               />
               <Route
-                path="/movies"
+                path={pathNames.movies}
                 element={
                   <ProtectedRoute
                     element={Movies}
@@ -84,7 +85,7 @@ function App() {
                 }
               />
               <Route
-                path="/saved-movies"
+                path={pathNames.savedMovies}
                 element={
                   <ProtectedRoute
                     element={SavedMovies}
@@ -94,7 +95,7 @@ function App() {
                 }
               />
               <Route
-                path="/profile"
+                path={pathNames.profile}
                 element={
                   <ProtectedRoute
                     element={Profile}
@@ -106,11 +107,11 @@ function App() {
                 }
               />
               <Route
-                path="/signin"
+                path={pathNames.signIn}
                 element={<Login handleLogin={handleLogin} />}
               />
               <Route
-                path="/signup"
+                path={pathNames.signUp}
                 element={<Register handleLogin={handleLogin} />}
               />
               <Route

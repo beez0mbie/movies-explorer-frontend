@@ -6,30 +6,23 @@ import Preloader from '../Preloader/Preloader';
 import { mainApi } from '../../utils/MainApi';
 import { SavedMoviesContext } from '../../contexts';
 import { processMovies } from '../../utils/processMovie';
+import { useShowMessageAfterSubmit } from '../../hooks/useShowMessageAfterSubmit';
+import { savedMoviesSearchLocalStore } from '../../utils/constants';
+import { getLocalStore } from '../../utils/localStorage';
 
 const SavedMovies = () => {
-  const savedMoviesStateLocalStorageName = 'saved-movies-search-state';
   const [wasSubmit, setWasSubmit] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showError, setShowError] = useState(false);
-  const [showMessage, setShowMessage] = useState(false);
 
-  // SAVED LOGIC
   const { savedMovies, setSavedMovies } = useContext(SavedMoviesContext);
   const [movies, setMovies] = useState(savedMovies || []);
+
+  const showMessage = useShowMessageAfterSubmit(movies, wasSubmit);
 
   useEffect(() => {
     setMovies(savedMovies);
   }, [savedMovies]);
-
-  useEffect(() => {
-    if (wasSubmit && movies && movies.length === 0) {
-      setShowMessage(true);
-    }
-    return () => {
-      setShowMessage(false);
-    };
-  }, [movies, wasSubmit, showMessage]);
 
   useEffect(() => {
     mainApi
@@ -37,14 +30,12 @@ const SavedMovies = () => {
       .then((data) => {
         if (data) {
           setSavedMovies(data);
-          const searchLocalStorageState = JSON.parse(
-            localStorage.getItem(savedMoviesStateLocalStorageName),
-          );
-          if (searchLocalStorageState.input || searchLocalStorageState.checkbox) {
+          const searchLocalStoreState = getLocalStore(savedMoviesSearchLocalStore);
+          if (searchLocalStoreState.input || searchLocalStoreState.checkbox) {
             const processedMovies = processMovies(
               savedMovies,
-              searchLocalStorageState.input,
-              searchLocalStorageState.checkbox,
+              searchLocalStoreState.input,
+              searchLocalStoreState.checkbox,
             );
             setMovies(processedMovies);
           } else {

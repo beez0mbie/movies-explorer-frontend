@@ -8,41 +8,44 @@ import { useWindowWidth } from '../../hooks/useWindowWidth';
 import { processMovies } from '../../utils/processMovie';
 import { mainApi } from '../../utils/MainApi';
 import { SavedMoviesContext } from '../../contexts';
+import { useShowMessageAfterSubmit } from '../../hooks/useShowMessageAfterSubmit';
+import {
+  desktopMinWidth,
+  mobileMaxWidth,
+  desktopCardsToShow,
+  tabletCardsToShow,
+  mobileCardsToShow,
+  minChunk,
+  maxChunk,
+  moviesStore,
+} from '../../utils/constants';
+import { getLocalStore, setLocalStore } from '../../utils/localStorage';
 
 const Movies = () => {
-  const desktopMinWidth = 1052;
-  const mobileMaxWidth = 657;
-  const desktopCardsToShow = 12;
-  const tabletCardsToShow = 8;
-  const mobileCardsToShow = 5;
-  const minChunk = 2;
-  const maxChunk = 3;
-
   const [isLoading, setIsLoading] = useState(false);
   const [showError, setShowError] = useState(false);
-  const [showMessage, setShowMessage] = useState(false);
 
   const [shouldAddMovies, setShouldAddMovies] = useState(false);
   const [wasSubmit, setWasSubmit] = useState(false);
-  const [movies, setMovies] = useState(() => JSON.parse(localStorage.getItem('movies')) || []);
-  const [allMovies, setAllMovies] = useState(
-    () => JSON.parse(localStorage.getItem('all-movies')) || [],
-  );
+  const [movies, setMovies] = useState(getLocalStore(moviesStore.movies) || []);
+  const [allMovies, setAllMovies] = useState(getLocalStore(moviesStore.all) || []);
   const [moviesToRender, setMoviesToRender] = useState(
-    () => JSON.parse(localStorage.getItem('moviesToRender')) || [],
+    getLocalStore(moviesStore.moviesToRender) || [],
   );
   const [maxPossibleCards, setMaxPossibleCards] = useState(
-    () => JSON.parse(localStorage.getItem('maxPossibleCards')) || mobileCardsToShow,
+    getLocalStore(moviesStore.maxPossibleCards) || mobileCardsToShow,
   );
-  const [chunk, setChunk] = useState(minChunk);
   const [moviesListLength, setMoviesListLength] = useState(
-    () => JSON.parse(localStorage.getItem('moviesListLength')) || 0,
+    getLocalStore(moviesStore.moviesListLength) || 0,
   );
+
+  const [chunk, setChunk] = useState(minChunk);
 
   const windowWidth = useWindowWidth();
 
   const moviesList = useRef(null);
 
+  const showMessage = useShowMessageAfterSubmit(movies, wasSubmit);
   const { savedMovies, setSavedMovies } = useContext(SavedMoviesContext);
 
   useEffect(() => {
@@ -59,11 +62,11 @@ const Movies = () => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('movies', JSON.stringify(movies));
-    localStorage.setItem('all-movies', JSON.stringify(allMovies));
-    localStorage.setItem('moviesToRender', JSON.stringify(moviesToRender));
-    localStorage.setItem('maxPossibleCards', JSON.stringify(maxPossibleCards));
-    localStorage.setItem('moviesListLength', JSON.stringify(moviesListLength));
+    setLocalStore(moviesStore.movies, movies);
+    setLocalStore(moviesStore.all, allMovies);
+    setLocalStore(moviesStore.moviesToRender, moviesToRender);
+    setLocalStore(moviesStore.maxPossibleCards, maxPossibleCards);
+    setLocalStore(moviesStore.moviesListLength, moviesListLength);
   }, [movies, moviesToRender, maxPossibleCards, moviesListLength, allMovies]);
 
   useEffect(() => {
@@ -104,15 +107,6 @@ const Movies = () => {
       setShouldAddMovies(false);
     };
   }, [moviesListLength, movies]);
-
-  useEffect(() => {
-    if (wasSubmit && movies && movies.length === 0) {
-      setShowMessage(true);
-    }
-    return () => {
-      setShowMessage(false);
-    };
-  }, [movies, wasSubmit, showMessage]);
 
   const handleSubmit = async (searchText, checkbox) => {
     setWasSubmit(false);

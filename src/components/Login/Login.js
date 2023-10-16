@@ -5,6 +5,7 @@ import './Login.css';
 import logo from '../../images/logo.svg';
 import { mainApi } from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts';
+import { pathNames } from '../../utils/constants';
 
 const Login = ({ handleLogin }) => {
   const { formValues, handleChangeForm, formErrors, formIsValid } = useFormWithValidation({
@@ -34,7 +35,7 @@ const Login = ({ handleLogin }) => {
               console.error('Login getUser error', e);
             });
           handleLogin();
-          navigate('/movies', { replace: true });
+          navigate(pathNames.movies, { replace: true });
         }
       })
       .catch((e) => {
@@ -45,7 +46,7 @@ const Login = ({ handleLogin }) => {
   return (
     <main className="login">
       <section className="login__container">
-        <Link to="/">
+        <Link to={pathNames.root}>
           <img
             src={logo}
             alt="Логотип"
@@ -116,7 +117,7 @@ const Login = ({ handleLogin }) => {
         <div className="login__signin">
           <p className="login__signin-desc">Ещё не зарегистрированы?</p>
           <Link
-            to="/signup"
+            to={pathNames.signUp}
             className="login__signin-link">
             Регистрация
           </Link>

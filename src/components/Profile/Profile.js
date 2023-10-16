@@ -4,6 +4,7 @@ import './Profile.css';
 import { useNavigate } from 'react-router-dom';
 import { mainApi } from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts';
+import { pathNames } from '../../utils/constants';
 
 const Profile = ({ handleExit }) => {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
@@ -42,7 +43,7 @@ const Profile = ({ handleExit }) => {
         if (res) {
           handleExit(false);
           localStorage.clear();
-          naigate('/');
+          naigate(pathNames.root);
         }
       })
       .catch((err) => console.error(`Error Profile.handleExit():\n ${err}`));
