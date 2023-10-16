@@ -77,7 +77,7 @@ const SearchForm = ({ handleSubmit }) => {
     <section className="search">
       <div className="search__container">
         <form
-          onSubmit={handleSubmit}
+          onSubmit={() => handleSubmit(formValues['search-input'])}
           id="search-form"
           className="search-form"
           ref={searchForm}

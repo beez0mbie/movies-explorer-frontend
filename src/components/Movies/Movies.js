@@ -108,13 +108,13 @@ const Movies = () => {
     };
   }, [movies, wasSubmit, showMessage]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (searchText) => {
     setWasSubmit(false);
     setIsLoading(true);
     setShowError(false);
     try {
       const items = await moviesApi.getMovies();
-      const processedMovies = processMovies(items);
+      const processedMovies = processMovies(items, searchText);
       setMovies(processedMovies);
     } catch (error) {
       console.error('Movies handleSubmit', error);
