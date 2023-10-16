@@ -9,7 +9,7 @@ import { mainApi } from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts';
 import { pathNames } from '../../utils/constants';
 
-const Register = ({ handleLogin }) => {
+const Register = ({ handleLogin, isLoggedIn }) => {
   const { formValues, handleChangeForm } = useForm({
     'register-name': '',
     'register-email': '',
@@ -20,6 +20,12 @@ const Register = ({ handleLogin }) => {
   const registerForm = useRef(null);
   const navigate = useNavigate();
   const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate(pathNames.root);
+    }
+  }, [isLoggedIn]);
 
   useEffect(() => {
     const form = registerForm.current;

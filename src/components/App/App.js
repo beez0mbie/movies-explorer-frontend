@@ -111,11 +111,21 @@ function App() {
               />
               <Route
                 path={pathNames.signIn}
-                element={<Login handleLogin={handleLogin} />}
+                element={
+                  <Login
+                    handleLogin={handleLogin}
+                    isLoggedIn={isLoggedIn}
+                  />
+                }
               />
               <Route
                 path={pathNames.signUp}
-                element={<Register handleLogin={handleLogin} />}
+                element={
+                  <Register
+                    handleLogin={handleLogin}
+                    isLoggedIn={isLoggedIn}
+                  />
+                }
               />
               <Route
                 path="*"

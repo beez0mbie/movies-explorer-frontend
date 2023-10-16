@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 import './Login.css';
@@ -7,7 +7,7 @@ import { mainApi } from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts';
 import { pathNames } from '../../utils/constants';
 
-const Login = ({ handleLogin }) => {
+const Login = ({ handleLogin, isLoggedIn }) => {
   const { formValues, handleChangeForm, formErrors, formIsValid } = useFormWithValidation({
     email: '',
     password: '',
@@ -15,6 +15,12 @@ const Login = ({ handleLogin }) => {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const navigate = useNavigate();
   const [isError, setIsError] = useState(false);
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate(pathNames.root);
+    }
+  }, [isLoggedIn]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     mainApi

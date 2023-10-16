@@ -6,9 +6,11 @@ import { pathNames } from '../../utils/constants';
 
 const ProtectedRoute = ({ element: Component, ...props }) => {
   const location = useLocation();
+
   useEffect(() => {
     props.handleTokenCheck(location.pathname);
   }, []);
+
   return props.isLoggedIn ? (
     <>
       <Header {...props} />
