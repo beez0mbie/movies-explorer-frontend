@@ -10,9 +10,9 @@ Light-4
 
 ## Сервер
 
-IP: 84.252.139.227
-URL: https://movies.ashmelkov.nomoredomainsrocks.ru/
+- IP: 84.252.139.227
+- URL: https://movies.ashmelkov.nomoredomainsrocks.ru/
 
 ## PR
 
-https://github.com/beez0mbie/movies-explorer-frontend/pull/2
+[Pull Requesl link](https://github.com/beez0mbie/movies-explorer-frontend/pull/2)
