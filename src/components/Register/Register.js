@@ -58,7 +58,6 @@ const Register = ({ handleLogin }) => {
             }
           })
           .catch((e) => console.error('Login', e));
-        navigate(pathNames.movies, { replace: true });
       })
       .catch((e) => {
         setIsError(true);

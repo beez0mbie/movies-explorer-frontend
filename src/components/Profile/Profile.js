@@ -1,13 +1,15 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 import './Profile.css';
 import { useNavigate } from 'react-router-dom';
 import { mainApi } from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts';
 import { pathNames } from '../../utils/constants';
+import { SavedMoviesContext } from '../../contexts';
 
 const Profile = ({ handleExit }) => {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+  const { savedMovies, setSavedMovies } = useContext(SavedMoviesContext);
   const userName = currentUser.name || '';
   const userEmail = currentUser.email || '';
   const { formValues, handleChangeForm, formErrors, formIsValid } = useFormWithValidation({
@@ -16,7 +18,19 @@ const Profile = ({ handleExit }) => {
   });
   const naigate = useNavigate();
   const [isError, setIsError] = useState(false);
+  const [isOk, setIsOk] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [isSameCredentials, setIsSameCredentials] = useState(false);
+
+  useEffect(() => {
+    if (formValues.name === userName && formValues.email === userEmail) {
+      setIsSameCredentials(true);
+    }
+    return () => {
+      setIsSameCredentials(false);
+    };
+  }, [formValues.email, formValues.name]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     mainApi
@@ -29,6 +43,7 @@ const Profile = ({ handleExit }) => {
           });
           setIsEdit(false);
           setIsError(false);
+          setIsOk(true);
         }
       })
       .catch((e) => {
@@ -41,8 +56,9 @@ const Profile = ({ handleExit }) => {
       .signout()
       .then((res) => {
         if (res) {
-          handleExit(false);
+          handleExit();
           localStorage.clear();
+          setSavedMovies([]);
           naigate(pathNames.root);
         }
       })
@@ -108,11 +124,12 @@ const Profile = ({ handleExit }) => {
           {isError && (
             <span className="profile-form__error">При обновлении профиля произошла ошибка.</span>
           )}
+          {isOk && <span className="profile-form__ok">Профиль успешно обновлен.</span>}
           {isEdit ? (
             <button
               type="submit"
               className={`profile-form__submit-button ${
-                !formIsValid && 'profile-form__button_disabled'
+                (isSameCredentials || !formIsValid) && 'profile-form__button_disabled'
               }`}>
               Сохранить
             </button>
@@ -120,7 +137,10 @@ const Profile = ({ handleExit }) => {
             <>
               <button
                 type="button"
-                onClick={() => setIsEdit(true)}
+                onClick={() => {
+                  setIsOk(false);
+                  setIsEdit(true);
+                }}
                 className="profile-form__button">
                 Редактировать
               </button>

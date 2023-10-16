@@ -30,11 +30,11 @@ function App() {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      handleTokenCheck();
+      handleTokenCheck(location.pathname);
     }
-  }, [isLoggedIn, location]);
+  }, [isLoggedIn]);
 
-  const handleTokenCheck = () => {
+  const handleTokenCheck = (path) => {
     mainApi
       .getUser()
       .then((res) => {
@@ -46,7 +46,7 @@ function App() {
             email,
           });
           setIsLoggedIn(true);
-          navigate(pathNames.movies, { replace: true });
+          navigate(path, { replace: true });
         }
       })
       .catch((err) => console.error(`Error apiAuth.checkToken():\n ${err}`));
@@ -81,6 +81,7 @@ function App() {
                     element={Movies}
                     isLoggedIn={isLoggedIn}
                     toggleSidebar={toggleSidebar}
+                    handleTokenCheck={handleTokenCheck}
                   />
                 }
               />
@@ -91,6 +92,7 @@ function App() {
                     element={SavedMovies}
                     isLoggedIn={isLoggedIn}
                     toggleSidebar={toggleSidebar}
+                    handleTokenCheck={handleTokenCheck}
                   />
                 }
               />
@@ -103,6 +105,7 @@ function App() {
                     toggleSidebar={toggleSidebar}
                     isHideFooter
                     handleExit={handleExit}
+                    handleTokenCheck={handleTokenCheck}
                   />
                 }
               />

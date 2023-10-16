@@ -1,10 +1,14 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Navigate, useLocation } from 'react-router-dom';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import { pathNames } from '../../utils/constants';
 
 const ProtectedRoute = ({ element: Component, ...props }) => {
+  const location = useLocation();
+  useEffect(() => {
+    props.handleTokenCheck(location.pathname);
+  }, []);
   return props.isLoggedIn ? (
     <>
       <Header {...props} />
@@ -13,7 +17,7 @@ const ProtectedRoute = ({ element: Component, ...props }) => {
     </>
   ) : (
     <Navigate
-      to={pathNames.signIn}
+      to={pathNames.root}
       replace
     />
   );
