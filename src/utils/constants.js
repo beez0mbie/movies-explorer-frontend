@@ -25,4 +25,3 @@ export const moviesStore = {
 };
 
 export const moviesSearchLocalStore = 'movies-search-state';
-export const savedMoviesSearchLocalStore = 'saved-movies-search-state';

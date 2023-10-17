@@ -7,8 +7,6 @@ import { mainApi } from '../../utils/MainApi';
 import { SavedMoviesContext } from '../../contexts';
 import { processMovies } from '../../utils/processMovie';
 import { useShowMessageAfterSubmit } from '../../hooks/useShowMessageAfterSubmit';
-import { savedMoviesSearchLocalStore } from '../../utils/constants';
-import { getLocalStore } from '../../utils/localStorage';
 
 const SavedMovies = () => {
   const [wasSubmit, setWasSubmit] = useState(false);
@@ -30,17 +28,7 @@ const SavedMovies = () => {
       .then((data) => {
         if (data) {
           setSavedMovies(data);
-          const searchLocalStoreState = getLocalStore(savedMoviesSearchLocalStore);
-          if (searchLocalStoreState.input || searchLocalStoreState.checkbox) {
-            const processedMovies = processMovies(
-              savedMovies,
-              searchLocalStoreState.input,
-              searchLocalStoreState.checkbox,
-            );
-            setMovies(processedMovies);
-          } else {
-            setMovies(data);
-          }
+          setMovies(data);
         }
       })
       .catch((err) => console.error(`Error mainApi.getMovies():\n ${err}`));

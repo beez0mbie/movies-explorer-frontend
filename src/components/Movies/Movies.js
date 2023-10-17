@@ -20,6 +20,7 @@ import {
   moviesStore,
 } from '../../utils/constants';
 import { getLocalStore, setLocalStore } from '../../utils/localStorage';
+import { getMaxPossibleCards } from '../../utils/getMaxPossibleCards';
 
 const Movies = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -109,6 +110,9 @@ const Movies = () => {
   }, [moviesListLength, movies]);
 
   const handleSubmit = async (searchText, checkbox) => {
+    const maxCards = getMaxPossibleCards(windowWidth);
+    console.log(maxCards);
+    setMaxPossibleCards(maxCards);
     setWasSubmit(false);
     setIsLoading(true);
     setShowError(false);

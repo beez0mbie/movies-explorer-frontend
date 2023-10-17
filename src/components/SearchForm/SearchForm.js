@@ -6,7 +6,7 @@ import './SearchForm.css';
 import { FormValidator } from '../../utils/FormValidator';
 import { validatorSearchConfig } from '../../utils/validatotConfig';
 import { useLocation } from 'react-router-dom';
-import { moviesSearchLocalStore, savedMoviesSearchLocalStore } from '../../utils/constants';
+import { moviesSearchLocalStore } from '../../utils/constants';
 import { getLocalStore, setLocalStore } from '../../utils/localStorage';
 
 import { pathNames } from '../../utils/constants';
@@ -20,14 +20,9 @@ const SearchForm = ({ handleSubmit, handleProcess }) => {
   };
 
   const moviesLocalStorage = getLocalStore(moviesSearchLocalStore);
-  const savedMoviesLocalStorage = getLocalStore(savedMoviesSearchLocalStore);
 
   if (location.pathname === pathNames.movies && moviesLocalStorage) {
     searchLocalStorageState = moviesLocalStorage;
-  }
-
-  if (location.pathname === pathNames.savedMovies && savedMoviesLocalStorage) {
-    searchLocalStorageState = savedMoviesLocalStorage;
   }
 
   const { formValues, handleChangeForm } = useForm({
@@ -51,12 +46,6 @@ const SearchForm = ({ handleSubmit, handleProcess }) => {
   useEffect(() => {
     if (location.pathname === pathNames.movies) {
       setLocalStore(moviesSearchLocalStore, {
-        input: formValues['search-input'],
-        checkbox: checkboxIsChecked,
-      });
-    }
-    if (location.pathname === pathNames.savedMovies) {
-      setLocalStore(savedMoviesSearchLocalStore, {
         input: formValues['search-input'],
         checkbox: checkboxIsChecked,
       });
