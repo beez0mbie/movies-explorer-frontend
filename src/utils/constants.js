@@ -7,8 +7,8 @@ export const PATH_NAMES = {
   signUp: '/signup',
 };
 
-export const DESKTOP_MIN_WIDTH = 1052;
-export const MOBILE_MAX_WIDTH = 657;
+export const DESKTOP_MIN_WIDTH = 1024;
+export const MOBILE_MAX_WIDTH = 590;
 export const DESKTOP_CARDS_TO_SHOW = 12;
 export const TABLET_CARDS_TO_SHOW = 8;
 export const MOBILE_CARDS_TO_SHOW = 5;
