@@ -1,4 +1,4 @@
-export const pathNames = {
+export const PATH_NAMES = {
   root: '/',
   movies: '/movies',
   savedMovies: '/saved-movies',
@@ -7,16 +7,16 @@ export const pathNames = {
   signUp: '/signup',
 };
 
-export const desktopMinWidth = 1052;
-export const mobileMaxWidth = 657;
-export const desktopCardsToShow = 12;
-export const tabletCardsToShow = 8;
-export const mobileCardsToShow = 5;
-export const minChunk = 2;
-export const maxChunk = 3;
+export const DESKTOP_MIN_WIDTH = 1052;
+export const MOBILE_MAX_WIDTH = 657;
+export const DESKTOP_CARDS_TO_SHOW = 12;
+export const TABLET_CARDS_TO_SHOW = 8;
+export const MOBILE_CARDS_TO_SHOW = 5;
+export const MIN_CHUNKS = 2;
+export const MAX_CHUNKS = 3;
 
 // movies localstorage names
-export const moviesStore = {
+export const MOVIES_STORE = {
   movies: 'movies',
   moviesToRender: 'movies-to-render',
   all: 'all-movies',
@@ -24,4 +24,6 @@ export const moviesStore = {
   moviesListLength: 'movies-list-length',
 };
 
-export const moviesSearchLocalStore = 'movies-search-state';
+export const MOVIES_SEARCH_LOCAL_STORE = 'movies-search-state';
+
+export const SHORT_MOVIE = 40;

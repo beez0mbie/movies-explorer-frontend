@@ -2,12 +2,12 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Account from '../Account/Account';
 import './Navigation.css';
-import { pathNames } from '../../utils/constants';
+import { PATH_NAMES } from '../../utils/constants';
 
 const Navigation = ({ isLoggedIn, isMainPage, toggleSidebar }) => {
   const location = useLocation();
-  const isMovies = location.pathname === pathNames.movies;
-  const isSavedMovies = location.pathname === pathNames.savedMovies;
+  const isMovies = location.pathname === PATH_NAMES.movies;
+  const isSavedMovies = location.pathname === PATH_NAMES.savedMovies;
   return (
     <nav className="navigation">
       {isLoggedIn ? (
@@ -17,14 +17,14 @@ const Navigation = ({ isLoggedIn, isMainPage, toggleSidebar }) => {
               <li>
                 <Link
                   className={`navigation__link ${isMovies && 'navigation__link_f-bold'}`}
-                  to={pathNames.movies}>
+                  to={PATH_NAMES.movies}>
                   Фильмы
                 </Link>
               </li>
               <li>
                 <Link
                   className={`navigation__link ${isSavedMovies && 'navigation__link_f-bold'}`}
-                  to={pathNames.savedMovies}>
+                  to={PATH_NAMES.savedMovies}>
                   Сохраненные фильмы
                 </Link>
               </li>
@@ -40,12 +40,12 @@ const Navigation = ({ isLoggedIn, isMainPage, toggleSidebar }) => {
         <>
           <Link
             className="navigation__link navigation__link_f-medium"
-            to={pathNames.signUp}>
+            to={PATH_NAMES.signUp}>
             Регистрация
           </Link>
           <Link
             className="navigation__link navigation__link_black navigation__link_f-medium"
-            to={pathNames.signIn}>
+            to={PATH_NAMES.signIn}>
             Войти
           </Link>
         </>

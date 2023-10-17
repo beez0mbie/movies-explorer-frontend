@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import { pathNames } from '../../utils/constants';
+import { PATH_NAMES } from '../../utils/constants';
 
 const ProtectedRoute = ({ element: Component, ...props }) => {
   const location = useLocation();
@@ -19,7 +19,7 @@ const ProtectedRoute = ({ element: Component, ...props }) => {
     </>
   ) : (
     <Navigate
-      to={pathNames.root}
+      to={PATH_NAMES.root}
       replace
     />
   );

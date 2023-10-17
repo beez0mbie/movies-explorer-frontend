@@ -7,7 +7,7 @@ import { FormValidator } from '../../utils/FormValidator';
 import { validatorConfigRegister } from '../../utils/validatotConfig';
 import { mainApi } from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts';
-import { pathNames } from '../../utils/constants';
+import { PATH_NAMES } from '../../utils/constants';
 
 const Register = ({ handleLogin, isLoggedIn }) => {
   const { formValues, handleChangeForm } = useForm({
@@ -20,10 +20,11 @@ const Register = ({ handleLogin, isLoggedIn }) => {
   const registerForm = useRef(null);
   const navigate = useNavigate();
   const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate(pathNames.root);
+      navigate(PATH_NAMES.root);
     }
   }, [isLoggedIn]);
 
@@ -35,6 +36,7 @@ const Register = ({ handleLogin, isLoggedIn }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     mainApi
       .signup(
         formValues['register-email'],
@@ -60,13 +62,19 @@ const Register = ({ handleLogin, isLoggedIn }) => {
                   console.error('RegisterError getUser error', e);
                 });
               handleLogin();
-              navigate(pathNames.movies, { replace: true });
+              setIsLoading(false);
+              navigate(PATH_NAMES.movies, { replace: true });
             }
           })
-          .catch((e) => console.error('Login', e));
+          .catch((e) => {
+            setIsError(true);
+            setIsLoading(false);
+            console.error('Login', e);
+          });
       })
       .catch((e) => {
         setIsError(true);
+        setIsLoading(false);
         console.error('RegisterError handleSubmit error', e);
       });
   };
@@ -74,7 +82,7 @@ const Register = ({ handleLogin, isLoggedIn }) => {
   return (
     <main className="register">
       <section className="register__container">
-        <Link to={pathNames.root}>
+        <Link to={PATH_NAMES.root}>
           <img
             src={logo}
             alt="Логотип"
@@ -146,14 +154,14 @@ const Register = ({ handleLogin, isLoggedIn }) => {
           )}
           <button
             type="submit"
-            className="register-form__button">
+            className={`register-form__button ${isLoading && 'register-form__button_disabled'}`}>
             Зарегистрироваться
           </button>
         </form>
         <div className="register__signin">
           <p className="register__signin-desc">Уже зарегистрированы?</p>
           <Link
-            to={pathNames.signIn}
+            to={PATH_NAMES.signIn}
             className="register__signin-link">
             Войти
           </Link>

@@ -12,7 +12,7 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.js';
 import SideBar from '../SideBar/SideBar';
 import { CurrentUserContext, SavedMoviesContext } from '../../contexts';
 import { mainApi } from '../../utils/MainApi.js';
-import { pathNames } from '../../utils/constants';
+import { PATH_NAMES } from '../../utils/constants';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -69,7 +69,7 @@ function App() {
           <div className="app__container">
             <Routes>
               <Route
-                path={pathNames.root}
+                path={PATH_NAMES.root}
                 element={
                   <Main
                     isLoggedIn={isLoggedIn}
@@ -78,7 +78,7 @@ function App() {
                 }
               />
               <Route
-                path={pathNames.movies}
+                path={PATH_NAMES.movies}
                 element={
                   <ProtectedRoute
                     element={Movies}
@@ -89,7 +89,7 @@ function App() {
                 }
               />
               <Route
-                path={pathNames.savedMovies}
+                path={PATH_NAMES.savedMovies}
                 element={
                   <ProtectedRoute
                     element={SavedMovies}
@@ -100,7 +100,7 @@ function App() {
                 }
               />
               <Route
-                path={pathNames.profile}
+                path={PATH_NAMES.profile}
                 element={
                   <ProtectedRoute
                     element={Profile}
@@ -113,7 +113,7 @@ function App() {
                 }
               />
               <Route
-                path={pathNames.signIn}
+                path={PATH_NAMES.signIn}
                 element={
                   <Login
                     handleLogin={handleLogin}
@@ -122,7 +122,7 @@ function App() {
                 }
               />
               <Route
-                path={pathNames.signUp}
+                path={PATH_NAMES.signUp}
                 element={
                   <Register
                     handleLogin={handleLogin}

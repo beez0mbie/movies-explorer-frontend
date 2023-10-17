@@ -4,7 +4,7 @@ import './Profile.css';
 import { useNavigate } from 'react-router-dom';
 import { mainApi } from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts';
-import { pathNames } from '../../utils/constants';
+import { PATH_NAMES } from '../../utils/constants';
 import { SavedMoviesContext } from '../../contexts';
 
 const Profile = ({ handleExit }) => {
@@ -20,7 +20,10 @@ const Profile = ({ handleExit }) => {
   const [isError, setIsError] = useState(false);
   const [isOk, setIsOk] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isSameCredentials, setIsSameCredentials] = useState(false);
+
+  useEffect(() => {}, [isSameCredentials]);
 
   useEffect(() => {
     if (formValues.name === userName && formValues.email === userEmail) {
@@ -33,6 +36,7 @@ const Profile = ({ handleExit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     mainApi
       .updateUser(formValues.email, formValues.name)
       .then((data) => {
@@ -44,10 +48,12 @@ const Profile = ({ handleExit }) => {
           setIsEdit(false);
           setIsError(false);
           setIsOk(true);
+          setIsLoading(false);
         }
       })
       .catch((e) => {
         setIsError(true);
+        setIsLoading(false);
         console.error('Profile updateUser error', e);
       });
   };
@@ -59,7 +65,7 @@ const Profile = ({ handleExit }) => {
           handleExit();
           localStorage.clear();
           setSavedMovies({ all: [], toRender: [] });
-          naigate(pathNames.root);
+          naigate(PATH_NAMES.root);
         }
       })
       .catch((err) => console.error(`Error Profile.handleExit():\n ${err}`));
@@ -129,7 +135,7 @@ const Profile = ({ handleExit }) => {
             <button
               type="submit"
               className={`profile-form__submit-button ${
-                (isSameCredentials || !formIsValid) && 'profile-form__button_disabled'
+                (isSameCredentials || !formIsValid || isLoading) && 'profile-form__button_disabled'
               }`}>
               Сохранить
             </button>

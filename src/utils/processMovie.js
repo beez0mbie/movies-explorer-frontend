@@ -1,11 +1,12 @@
 import { BEAT_FILM_URL } from '../env';
+import { SHORT_MOVIE } from '../utils/constants';
 
 export const processMovies = (movies, searchText, checkbox) => {
   let moviesToProcess = movies;
 
   if (checkbox) {
     moviesToProcess = moviesToProcess.filter((movie) => {
-      const isShort = Math.floor(movie.duration / 40) < 1;
+      const isShort = Math.floor(movie.duration / SHORT_MOVIE) < 1;
       return isShort;
     });
   }

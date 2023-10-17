@@ -5,7 +5,7 @@ import './Login.css';
 import logo from '../../images/logo.svg';
 import { mainApi } from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts';
-import { pathNames } from '../../utils/constants';
+import { PATH_NAMES } from '../../utils/constants';
 
 const Login = ({ handleLogin, isLoggedIn }) => {
   const { formValues, handleChangeForm, formErrors, formIsValid } = useFormWithValidation({
@@ -15,14 +15,16 @@ const Login = ({ handleLogin, isLoggedIn }) => {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const navigate = useNavigate();
   const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     if (isLoggedIn) {
-      navigate(pathNames.root);
+      navigate(PATH_NAMES.root);
     }
   }, [isLoggedIn]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     mainApi
       .signin(formValues.email, formValues.password)
       .then((data) => {
@@ -41,18 +43,20 @@ const Login = ({ handleLogin, isLoggedIn }) => {
               console.error('Login getUser error', e);
             });
           handleLogin();
-          navigate(pathNames.movies, { replace: true });
+          setIsLoading(false);
+          navigate(PATH_NAMES.movies, { replace: true });
         }
       })
       .catch((e) => {
         setIsError(true);
+        setIsLoading(false);
         console.error('Login handleSubmit error', e);
       });
   };
   return (
     <main className="login">
       <section className="login__container">
-        <Link to={pathNames.root}>
+        <Link to={PATH_NAMES.root}>
           <img
             src={logo}
             alt="Логотип"
@@ -116,14 +120,16 @@ const Login = ({ handleLogin, isLoggedIn }) => {
           {isError && <span className="login__error login__error_red">Что-то пошло не так...</span>}
           <button
             type="submit"
-            className={`login-form__button ${!formIsValid && 'login-form__button_disabled'}`}>
+            className={`login-form__button ${
+              (!formIsValid || isLoading) && 'login-form__button_disabled'
+            }`}>
             Войти
           </button>
         </form>
         <div className="login__signin">
           <p className="login__signin-desc">Ещё не зарегистрированы?</p>
           <Link
-            to={pathNames.signUp}
+            to={PATH_NAMES.signUp}
             className="login__signin-link">
             Регистрация
           </Link>

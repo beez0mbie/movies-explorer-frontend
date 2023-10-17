@@ -10,14 +10,14 @@ import { mainApi } from '../../utils/MainApi';
 import { SavedMoviesContext } from '../../contexts';
 import { useShowMessageAfterSubmit } from '../../hooks/useShowMessageAfterSubmit';
 import {
-  desktopMinWidth,
-  mobileMaxWidth,
-  desktopCardsToShow,
-  tabletCardsToShow,
-  mobileCardsToShow,
-  minChunk,
-  maxChunk,
-  moviesStore,
+  DESKTOP_MIN_WIDTH,
+  MOBILE_MAX_WIDTH,
+  DESKTOP_CARDS_TO_SHOW,
+  TABLET_CARDS_TO_SHOW,
+  MOBILE_CARDS_TO_SHOW,
+  MIN_CHUNKS,
+  MAX_CHUNKS,
+  MOVIES_STORE,
 } from '../../utils/constants';
 import { getLocalStore, setLocalStore } from '../../utils/localStorage';
 import { getMaxPossibleCards } from '../../utils/getMaxPossibleCards';
@@ -28,19 +28,19 @@ const Movies = () => {
 
   const [shouldAddMovies, setShouldAddMovies] = useState(false);
   const [wasSubmit, setWasSubmit] = useState(false);
-  const [movies, setMovies] = useState(getLocalStore(moviesStore.movies) || []);
-  const [allMovies, setAllMovies] = useState(getLocalStore(moviesStore.all) || []);
+  const [movies, setMovies] = useState(getLocalStore(MOVIES_STORE.movies) || []);
+  const [allMovies, setAllMovies] = useState(getLocalStore(MOVIES_STORE.all) || []);
   const [moviesToRender, setMoviesToRender] = useState(
-    getLocalStore(moviesStore.moviesToRender) || [],
+    getLocalStore(MOVIES_STORE.moviesToRender) || [],
   );
   const [maxPossibleCards, setMaxPossibleCards] = useState(
-    getLocalStore(moviesStore.maxPossibleCards) || mobileCardsToShow,
+    getLocalStore(MOVIES_STORE.maxPossibleCards) || MOBILE_CARDS_TO_SHOW,
   );
   const [moviesListLength, setMoviesListLength] = useState(
-    getLocalStore(moviesStore.moviesListLength) || 0,
+    getLocalStore(MOVIES_STORE.moviesListLength) || 0,
   );
 
-  const [chunk, setChunk] = useState(minChunk);
+  const [chunk, setChunk] = useState(MIN_CHUNKS);
 
   const windowWidth = useWindowWidth();
 
@@ -63,29 +63,29 @@ const Movies = () => {
   }, []);
 
   useEffect(() => {
-    setLocalStore(moviesStore.movies, movies);
-    setLocalStore(moviesStore.all, allMovies);
-    setLocalStore(moviesStore.moviesToRender, moviesToRender);
-    setLocalStore(moviesStore.maxPossibleCards, maxPossibleCards);
-    setLocalStore(moviesStore.moviesListLength, moviesListLength);
+    setLocalStore(MOVIES_STORE.movies, movies);
+    setLocalStore(MOVIES_STORE.all, allMovies);
+    setLocalStore(MOVIES_STORE.moviesToRender, moviesToRender);
+    setLocalStore(MOVIES_STORE.maxPossibleCards, maxPossibleCards);
+    setLocalStore(MOVIES_STORE.moviesListLength, moviesListLength);
   }, [movies, moviesToRender, maxPossibleCards, moviesListLength, allMovies]);
 
   useEffect(() => {
-    if (windowWidth >= desktopMinWidth) {
-      if (moviesListLength < desktopCardsToShow) {
-        setMaxPossibleCards(desktopCardsToShow);
+    if (windowWidth >= DESKTOP_MIN_WIDTH) {
+      if (moviesListLength < DESKTOP_CARDS_TO_SHOW) {
+        setMaxPossibleCards(DESKTOP_CARDS_TO_SHOW);
       }
-      setChunk(maxChunk);
-    } else if (windowWidth < desktopMinWidth && windowWidth > mobileMaxWidth) {
-      if (moviesListLength < tabletCardsToShow) {
-        setMaxPossibleCards(tabletCardsToShow);
+      setChunk(MAX_CHUNKS);
+    } else if (windowWidth < DESKTOP_MIN_WIDTH && windowWidth > MOBILE_MAX_WIDTH) {
+      if (moviesListLength < TABLET_CARDS_TO_SHOW) {
+        setMaxPossibleCards(TABLET_CARDS_TO_SHOW);
       }
-      setChunk(minChunk);
+      setChunk(MIN_CHUNKS);
     } else {
       if (moviesListLength === 0) {
-        setMaxPossibleCards(mobileCardsToShow);
+        setMaxPossibleCards(MOBILE_CARDS_TO_SHOW);
       }
-      setChunk(minChunk);
+      setChunk(MIN_CHUNKS);
     }
     const moviesToRenderLocal = movies.slice(0, maxPossibleCards);
     setMoviesToRender(moviesToRenderLocal);
@@ -145,6 +145,7 @@ const Movies = () => {
       <SearchForm
         handleSubmit={handleSubmit}
         handleProcess={handleProcess}
+        isLoading={isLoading}
       />
       <MoviesCardList
         movies={moviesToRender}

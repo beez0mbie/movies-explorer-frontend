@@ -6,12 +6,11 @@ import './SearchForm.css';
 import { FormValidator } from '../../utils/FormValidator';
 import { validatorSearchConfig } from '../../utils/validatotConfig';
 import { useLocation } from 'react-router-dom';
-import { moviesSearchLocalStore } from '../../utils/constants';
+import { MOVIES_SEARCH_LOCAL_STORE } from '../../utils/constants';
 import { getLocalStore, setLocalStore } from '../../utils/localStorage';
+import { PATH_NAMES } from '../../utils/constants';
 
-import { pathNames } from '../../utils/constants';
-
-const SearchForm = ({ handleSubmit, handleProcess }) => {
+const SearchForm = ({ handleSubmit, handleProcess, isLoading }) => {
   const location = useLocation();
 
   let searchLocalStorageState = {
@@ -19,9 +18,9 @@ const SearchForm = ({ handleSubmit, handleProcess }) => {
     checkbox: false,
   };
 
-  const moviesLocalStorage = getLocalStore(moviesSearchLocalStore);
+  const moviesLocalStorage = getLocalStore(MOVIES_SEARCH_LOCAL_STORE);
 
-  if (location.pathname === pathNames.movies && moviesLocalStorage) {
+  if (location.pathname === PATH_NAMES.movies && moviesLocalStorage) {
     searchLocalStorageState = moviesLocalStorage;
   }
 
@@ -44,8 +43,8 @@ const SearchForm = ({ handleSubmit, handleProcess }) => {
   }, []);
 
   useEffect(() => {
-    if (location.pathname === pathNames.movies) {
-      setLocalStore(moviesSearchLocalStore, {
+    if (location.pathname === PATH_NAMES.movies) {
+      setLocalStore(MOVIES_SEARCH_LOCAL_STORE, {
         input: formValues['search-input'],
         checkbox: checkboxIsChecked,
       });
@@ -88,7 +87,7 @@ const SearchForm = ({ handleSubmit, handleProcess }) => {
             <span className="search-form__input-error search-input-error"></span>
             <button
               type="submit"
-              className="search-form__button">
+              className={`search-form__button ${isLoading && 'search-form__button_disabled'}`}>
               Найти
             </button>
           </div>
