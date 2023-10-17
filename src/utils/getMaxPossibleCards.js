@@ -4,9 +4,6 @@ import {
   desktopCardsToShow,
   tabletCardsToShow,
   mobileCardsToShow,
-  minChunk,
-  maxChunk,
-  moviesStore,
 } from './constants';
 
 export const getMaxPossibleCards = (windowWidth) => {

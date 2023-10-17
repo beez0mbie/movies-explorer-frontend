@@ -29,6 +29,7 @@ const SideBar = ({ isOpen, toggleSidebar }) => {
           <ul className="sidebar__list">
             <li>
               <Link
+                onClick={toggleSidebar}
                 className={`sidebar__link ${isMain && 'sidebar__link_active'}`}
                 to={pathNames.root}>
                 Главная
@@ -36,6 +37,7 @@ const SideBar = ({ isOpen, toggleSidebar }) => {
             </li>
             <li>
               <Link
+                onClick={toggleSidebar}
                 className={`sidebar__link ${isMovies && 'sidebar__link_active'}`}
                 to={pathNames.movies}>
                 Фильмы
@@ -43,13 +45,14 @@ const SideBar = ({ isOpen, toggleSidebar }) => {
             </li>
             <li>
               <Link
+                onClick={toggleSidebar}
                 className={`sidebar__link ${isSavedMovies && 'sidebar__link_active'}`}
                 to={pathNames.savedMovies}>
                 Сохранённые фильмы
               </Link>
             </li>
           </ul>
-          <Account />
+          <Account handleClick={toggleSidebar} />
         </div>
       </div>
     </div>
