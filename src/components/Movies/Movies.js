@@ -50,12 +50,12 @@ const Movies = () => {
   const { savedMovies, setSavedMovies } = useContext(SavedMoviesContext);
 
   useEffect(() => {
-    if (savedMovies.length === 0) {
+    if (savedMovies.all.length === 0) {
       mainApi
         .getMovies()
         .then((data) => {
           if (data) {
-            setSavedMovies(data);
+            setSavedMovies({ all: data, toRender: data });
           }
         })
         .catch((err) => console.error(`Error mainApi.getMovies():\n ${err}`));

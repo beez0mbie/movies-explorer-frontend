@@ -14,21 +14,15 @@ const SavedMovies = () => {
   const [showError, setShowError] = useState(false);
 
   const { savedMovies, setSavedMovies } = useContext(SavedMoviesContext);
-  const [movies, setMovies] = useState(savedMovies || []);
 
-  const showMessage = useShowMessageAfterSubmit(movies, wasSubmit);
-
-  useEffect(() => {
-    setMovies(savedMovies);
-  }, [savedMovies]);
+  const showMessage = useShowMessageAfterSubmit(savedMovies.toRender, wasSubmit);
 
   useEffect(() => {
     mainApi
       .getMovies()
       .then((data) => {
         if (data) {
-          setSavedMovies(data);
-          setMovies(data);
+          setSavedMovies({ all: data, toRender: data });
         }
       })
       .catch((err) => console.error(`Error mainApi.getMovies():\n ${err}`));
@@ -39,8 +33,10 @@ const SavedMovies = () => {
     setIsLoading(true);
     setShowError(false);
     try {
-      const processedMovies = processMovies(savedMovies, searchText, checkbox);
-      setMovies(processedMovies);
+      const processedMovies = processMovies(savedMovies.all, searchText, checkbox);
+      setSavedMovies((oldState) => {
+        return { all: oldState.all, toRender: processedMovies };
+      });
     } catch (error) {
       console.error('Saved Movies handleSubmit', error);
       setShowError(true);
@@ -51,8 +47,10 @@ const SavedMovies = () => {
 
   const handleProcess = async (searchText, checkbox) => {
     setIsLoading(true);
-    const processedMovies = processMovies(savedMovies, searchText, checkbox);
-    setMovies(processedMovies);
+    const processedMovies = processMovies(savedMovies.all, searchText, checkbox);
+    setSavedMovies((oldState) => {
+      return { all: oldState.all, toRender: processedMovies };
+    });
     setIsLoading(false);
   };
 
@@ -63,12 +61,12 @@ const SavedMovies = () => {
         handleProcess={handleProcess}
       />
       <MoviesCardList
-        movies={movies}
+        movies={savedMovies.toRender}
         shouldRemove={true}
         showError={showError}
       />
       <Preloader
-        showMessage={showMessage}
+        showMessage={showMessage || savedMovies.toRender.length === 0}
         shouldAdd={false}
         isLoading={isLoading}
       />

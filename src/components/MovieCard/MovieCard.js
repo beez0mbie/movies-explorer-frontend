@@ -10,7 +10,9 @@ const MovieCard = ({ movie, shouldRemove }) => {
   const [like, setLike] = useState(false);
   const { savedMovies, setSavedMovies } = useContext(SavedMoviesContext);
 
-  const foundSavedCardIndex = savedMovies.findIndex((element) => element.movieId === movie.movieId);
+  const foundSavedCardIndex = savedMovies.all.findIndex(
+    (element) => element.movieId === movie.movieId,
+  );
 
   useEffect(() => {
     if (foundSavedCardIndex >= 0) {
@@ -18,7 +20,7 @@ const MovieCard = ({ movie, shouldRemove }) => {
     } else {
       setLike(false);
     }
-  }, [savedMovies, foundSavedCardIndex]);
+  }, [savedMovies.all, foundSavedCardIndex]);
 
   const handleLikeCard = (e) => {
     e.preventDefault();
@@ -28,7 +30,9 @@ const MovieCard = ({ movie, shouldRemove }) => {
           .addMovie(movie)
           .then((data) => {
             setLike(true);
-            setSavedMovies((oldArray) => [data, ...oldArray]);
+            setSavedMovies((oldState) => {
+              return { all: [data, ...oldState.all], toRender: [data, ...oldState.toRender] };
+            });
           })
           .catch((err) => console.error(`MovieCard mainApi.addMovie():\n ${err}`));
       } else {
@@ -44,7 +48,12 @@ const MovieCard = ({ movie, shouldRemove }) => {
     mainApi
       .deleteMovie(movieId)
       .then(() => {
-        setSavedMovies((state) => state.filter((movie) => movie.movieId !== movieId));
+        setSavedMovies((oldState) => {
+          return {
+            all: oldState.all.filter((movie) => movie.movieId !== movieId),
+            toRender: oldState.toRender.filter((movie) => movie.movieId !== movieId),
+          };
+        });
         setLike(false);
       })
       .catch((err) => console.error(`MovieCard mainApi.deleteMovie():\n ${err}`));

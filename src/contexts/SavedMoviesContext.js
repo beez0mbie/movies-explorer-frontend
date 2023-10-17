@@ -1,6 +1,9 @@
 import { createContext } from 'react';
 
 export const SavedMoviesContext = createContext({
-  savedMovies: [],
+  savedMovies: {
+    all: [],
+    toRender: [],
+  },
   setSavedMovies: () => {},
 });

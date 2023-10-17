@@ -58,7 +58,7 @@ const Profile = ({ handleExit }) => {
         if (res) {
           handleExit();
           localStorage.clear();
-          setSavedMovies([]);
+          setSavedMovies({ all: [], toRender: [] });
           naigate(pathNames.root);
         }
       })

@@ -23,7 +23,10 @@ function App() {
     _id: '',
   });
   const currentUserValue = useMemo(() => ({ currentUser, setCurrentUser }), [currentUser]);
-  const [savedMovies, setSavedMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useState({
+    all: [],
+    toRender: [],
+  });
   const savedMoviesValue = useMemo(() => ({ savedMovies, setSavedMovies }), [savedMovies]);
   const location = useLocation();
   const navigate = useNavigate();
