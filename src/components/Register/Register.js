@@ -1,23 +1,88 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
 import './Register.css';
 import logo from '../../images/logo.svg';
+import { FormValidator } from '../../utils/FormValidator';
+import { validatorConfigRegister } from '../../utils/validatotConfig';
+import { mainApi } from '../../utils/MainApi';
+import { CurrentUserContext } from '../../contexts';
+import { PATH_NAMES } from '../../utils/constants';
 
-const Register = () => {
+const Register = ({ handleLogin, isLoggedIn }) => {
   const { formValues, handleChangeForm } = useForm({
-    name: '',
-    email: '',
-    password: '',
+    'register-name': '',
+    'register-email': '',
+    'register-password': '',
   });
-  const [isError, setIsError] = useState(true);
-  const handleSubmit = () => {
-    console.log('Submit');
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+
+  const registerForm = useRef(null);
+  const navigate = useNavigate();
+  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate(PATH_NAMES.root);
+    }
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    const form = registerForm.current;
+    const formValidator = new FormValidator(validatorConfigRegister, form);
+    formValidator.enableValivation();
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    mainApi
+      .signup(
+        formValues['register-email'],
+        formValues['register-password'],
+        formValues['register-name'],
+      )
+      .then((res) => {
+        mainApi
+          .signin(formValues['register-email'], formValues['register-password'])
+          .then((data) => {
+            if (data) {
+              mainApi
+                .getUser()
+                .then((res) => {
+                  setCurrentUser({
+                    name: res.name,
+                    email: res.email,
+                    _id: res._id,
+                  });
+                })
+                .catch((e) => {
+                  setIsError(true);
+                  console.error('RegisterError getUser error', e);
+                });
+              handleLogin();
+              setIsLoading(false);
+              navigate(PATH_NAMES.movies, { replace: true });
+            }
+          })
+          .catch((e) => {
+            setIsError(true);
+            setIsLoading(false);
+            console.error('Login', e);
+          });
+      })
+      .catch((e) => {
+        setIsError(true);
+        setIsLoading(false);
+        console.error('RegisterError handleSubmit error', e);
+      });
   };
+
   return (
     <main className="register">
       <section className="register__container">
-        <Link to="/">
+        <Link to={PATH_NAMES.root}>
           <img
             src={logo}
             alt="Логотип"
@@ -26,71 +91,77 @@ const Register = () => {
         </Link>
         <h1 className="register__title">Добро пожаловать!</h1>
         <form
+          ref={registerForm}
           onSubmit={handleSubmit}
           id="register-form"
-          className="register__form">
+          className="register-form">
           <label
             htmlFor="name"
-            className="register__field">
-            Имя
+            className="register-form__field">
+            <span className="register-form__label">Имя</span>
+            <input
+              required
+              id="register-name"
+              name="register-name"
+              minLength="2"
+              maxLength="30"
+              className={`register-form__input ${isError && 'register-form__input_red'}`}
+              type="text"
+              value={formValues['register-name']}
+              onChange={handleChangeForm}
+              placeholder="Имя"
+              pattern="^([A-zА-яёЁ \-]+)$"
+            />
+            <span className="register-form__input-error register-name-error"></span>
           </label>
-          <input
-            required
-            id="name"
-            name="name"
-            minlength="2"
-            maxLength="30"
-            className="register__input"
-            type="text"
-            value={formValues.name}
-            onChange={handleChangeForm}
-            placeholder="Имя"
-          />
           <label
             htmlFor="email"
-            className="register__field">
-            E-mail
+            className="register-form__field">
+            <span className="register-form__label">E-mail</span>
+            <input
+              required
+              id="register-email"
+              name="register-email"
+              className={`register-form__input ${isError && 'register-form__input_red'}`}
+              type="email"
+              value={formValues['register-email']}
+              onChange={handleChangeForm}
+              placeholder="E-mail"
+              pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$"
+            />
+            <span className="register-form__input-error register-email-error"></span>
           </label>
-          <input
-            required
-            id="email"
-            name="email"
-            className="register__input"
-            type="email"
-            value={formValues.email}
-            onChange={handleChangeForm}
-            placeholder="E-mail"
-          />
           <label
             htmlFor="password"
-            className="register__field">
-            Пароль
+            className="register-form__field">
+            <span className="register-form__label">Пароль</span>
+            <input
+              required
+              id="register-password"
+              name="register-password"
+              minLength="8"
+              maxLength="30"
+              className={`register-form__input ${isError && 'register-form__input_red'}`}
+              type="password"
+              value={formValues['register-password']}
+              onChange={handleChangeForm}
+              placeholder="Пароль"
+            />
+            <span className="register-form__input-error register-password-error"></span>
           </label>
-          <input
-            required
-            id="password"
-            name="password"
-            minlength="8"
-            maxLength="30"
-            className={`register__input ${isError && 'register__input_red'}`}
-            type="password"
-            value={formValues.password}
-            onChange={handleChangeForm}
-            placeholder="Пароль"
-          />
           {isError && (
             <span className="register__error register__error_red">Что-то пошло не так...</span>
           )}
           <button
             type="submit"
-            className="register__button">
+            className={`register-form__button ${isLoading && 'register-form__button_disabled'}`}>
             Зарегистрироваться
           </button>
         </form>
         <div className="register__signin">
           <p className="register__signin-desc">Уже зарегистрированы?</p>
           <Link
-            to="/signin"
+            to={PATH_NAMES.signIn}
             className="register__signin-link">
             Войти
           </Link>

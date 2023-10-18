@@ -2,6 +2,7 @@ import React from 'react';
 import './SideBar.css';
 import { Link, useLocation } from 'react-router-dom';
 import Account from '../Account/Account';
+import { PATH_NAMES } from '../../utils/constants';
 
 const SideBar = ({ isOpen, toggleSidebar }) => {
   const handleMouseDown = (evt) => {
@@ -10,9 +11,9 @@ const SideBar = ({ isOpen, toggleSidebar }) => {
     }
   };
   const location = useLocation();
-  const isMain = location.pathname === '/';
-  const isMovies = location.pathname === '/movies';
-  const isSavedMovies = location.pathname === '/saved-movies';
+  const isMain = location.pathname === PATH_NAMES.root;
+  const isMovies = location.pathname === PATH_NAMES.movies;
+  const isSavedMovies = location.pathname === PATH_NAMES.savedMovies;
   return (
     <div
       className={`sidebar ${isOpen ? 'sidebar_opened' : ''}`}
@@ -28,27 +29,30 @@ const SideBar = ({ isOpen, toggleSidebar }) => {
           <ul className="sidebar__list">
             <li>
               <Link
+                onClick={toggleSidebar}
                 className={`sidebar__link ${isMain && 'sidebar__link_active'}`}
-                to="/">
+                to={PATH_NAMES.root}>
                 Главная
               </Link>
             </li>
             <li>
               <Link
+                onClick={toggleSidebar}
                 className={`sidebar__link ${isMovies && 'sidebar__link_active'}`}
-                to="/movies">
+                to={PATH_NAMES.movies}>
                 Фильмы
               </Link>
             </li>
             <li>
               <Link
+                onClick={toggleSidebar}
                 className={`sidebar__link ${isSavedMovies && 'sidebar__link_active'}`}
-                to="/saved-movies">
+                to={PATH_NAMES.savedMovies}>
                 Сохранённые фильмы
               </Link>
             </li>
           </ul>
-          <Account />
+          <Account handleClick={toggleSidebar} />
         </div>
       </div>
     </div>

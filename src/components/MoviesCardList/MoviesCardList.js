@@ -1,24 +1,38 @@
 import React from 'react';
 import './MoviesCardList.css';
-import MoviesCard from '../MoviesCard/MoviesCard';
+import MovieCard from '../MovieCard/MovieCard';
 
-const MoviesCardList = ({ shouldRemowe }) => {
+const MoviesCardList = ({
+  movies,
+  shouldRemove,
+  showError,
+  moviesListRef,
+  handleDeleteMovie,
+  moviesToRender,
+}) => {
   return (
     <section className="movies-cards">
-      <ul className="movies-cards__list">
-        <MoviesCard
-          shouldRemowe={shouldRemowe}
-          name="33 слова о дизайне"
-        />
-        <MoviesCard
-          shouldRemowe={shouldRemowe}
-          name="33 слова о дизайне"
-        />
-        <MoviesCard
-          shouldRemowe={shouldRemowe}
-          name="33 слова о дизайне"
-        />
-      </ul>
+      {movies && movies.length > 0 && (
+        <ul
+          ref={moviesListRef}
+          className="movies-cards__list">
+          {movies.map((movie) => (
+            <MovieCard
+              key={movie.movieId}
+              movie={movie}
+              shouldRemove={shouldRemove}
+              handleDeleteMovie={handleDeleteMovie}
+              moviesToRender={moviesToRender}
+            />
+          ))}
+        </ul>
+      )}
+      {showError && (
+        <p className="movies-cards__error">
+          Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен.
+          Подождите немного и попробуйте ещё раз
+        </p>
+      )}
     </section>
   );
 };

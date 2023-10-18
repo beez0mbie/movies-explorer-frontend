@@ -28,13 +28,23 @@
   letter-spacing: 0em;
 }
 
-.register__form {
+.register-form {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-.register__field {
+.register-form__field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.register-form__field:first-child {
+  padding-top: 20px;
+}
+
+.register-form__label {
   padding-top: 20px;
   padding-bottom: 10px;
   color: #a0a0a0;
@@ -45,11 +55,7 @@
   text-align: left;
 }
 
-.register__field:first-child {
-  padding-top: 40px;
-}
-
-.register__input {
+.register-form__input {
   padding: 15px;
   border: 0;
   border-radius: 8px;
@@ -60,16 +66,20 @@
   letter-spacing: 0em;
 }
 
-.register__input:focus {
+.register-form__input:focus {
   outline: 1px solid #4083ff;
 }
 
-.register__input_red {
+.register-form__input_type_error {
+  border: solid 1px#ff4062;
+}
+
+.register-form__input_red {
   color: #ff4062;
 }
 
 .register__error {
-  padding-top: 10px;
+  padding-top: 15px;
   font-size: 10px;
   font-weight: 400;
   line-height: 12px;
@@ -80,7 +90,7 @@
   color: #ff4062;
 }
 
-.register__button {
+.register-form__button {
   cursor: pointer;
   margin-top: 69px;
   min-height: 45px;
@@ -95,10 +105,30 @@
   transition: opacity 0.3s;
 }
 
-.register__button:hover {
+.register-form__button:hover {
   opacity: 0.8;
 }
+.register-form__button_disabled {
+  pointer-events: none;
+  opacity: 0.2;
+  color: #000000;
+  border: solid 1px #000000;
+  background-color: #ffffff;
+}
+.register-form__input-error {
+  position: absolute;
+  top: 100%;
+  font-weight: 400;
+  font-size: 9px;
+  line-height: 15px;
+  color: #ff4062;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
 
+.register-form__input-error_active {
+  opacity: 1;
+}
 .register__signin {
   padding-top: 16px;
   display: flex;
@@ -149,6 +179,12 @@
   .register__form {
     padding-top: 40px;
     min-width: 260px;
+  }
+  .register-form__label {
+    padding-top: 45px;
+  }
+  .register__error {
+    padding-top: 45px;
   }
   .register__button {
     margin-top: auto;
